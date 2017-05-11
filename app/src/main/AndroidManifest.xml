@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kev.projetkevloic">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.Login"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".View.home.HomeOiseaux"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.home.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.home.HomeOrnithologue"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.home.HomeObservations"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.show.show_oiseau"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.home.HomeParam"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.add.addOiseau"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.row.row_ornitho"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.show.show_ornitho"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.add.addOrni"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.edit.edit_oiseau"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.edit.edit_ornitho"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.row.row_observ"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.show.show_observ"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.add.addObserv"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".View.edit.edit_observ"
+            android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>

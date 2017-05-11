@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">FindTheBird</string>
+    <string name="Retour">Retour</string>
+    <string name="param_tres">paramètres</string>
+    <string name="delete_oiseau">delete_oiseau</string>
+    <string name="add_oiseau">add_oiseau</string>
+    <string name="BTNADD">ADD</string>
+    <string name="descriptif">Descriptif</string>
+    <string name="couleur">Couleur</string>
+    <string name="poids">Poids</string>
+    <string name="taille">Taille</string>
+    <string name="nom">Nom</string>
+    <string name="poids2">Poids2</string>
+    <string name="couleur2">Couleur2</string>
+    <string name="descriptif2">Descriptif2</string>
+    <string name="taille2">Taille2</string>
+    <string name="ok">OK</string>
+    <string name="nom2">Nom2</string>
+    <string name="text">text</string>
+    <string name="canton">canton</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="age">age</string>
+    <string name="prenom">prenom</string>
+    <string name="suppression">suppression</string>
+    <string name="Modify">Modify</string>
+    <string name="nomOiseau">nomOiseau</string>
+    <string name="nomOrni">nomOrni</string>
+    <string name="Register">Register</string>
+    <string name="Login">Login</string>
+    <string name="register">Register</string>
+    <string name="login">login</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="_20">20</string>
+    <string name="mdp">1234</string>
+    <string name="observations">Observations</string>
+    <string name="oiseaux">Oiseaux</string>
+    <string name="ornithologue">Ornithologue</string>
+    <string name="Orni">Orni :</string>
+    <string name="oiseau">Oiseau :</string>
+    <string name="Text">Text :</string>
+    <string name="descritpion">Description :</string>
+
+
+</resources>
+

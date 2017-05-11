@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FindTheBird</string>
+    <string name="Retour">Retour</string>
+    <string name="Modify">modiFiER</string>
+    <string name="BTNADD">ADD_FR</string>
+    <string name="Login">LOGIN_FR</string>
+    <string name="Register">RegisterFR</string>
+    <string name="add_oiseau">add_oiseau_FR</string>
+    <string name="age">Age</string>
+    <string name="canton">Canton</string>
+    <string name="couleur">Couleur</string>
+    <string name="delete_oiseau">delete_oiseauFR</string>
+    <string name="descriptif">DescriptifFR</string>
+    <string name="enter_name">Enter Name FR</string>
+    <string name="login">Login FR</string>
+    <string name="nom">Nom</string>
+    <string name="nomOiseau">Nom Oiseau</string>
+    <string name="nomOrni">Nom Ornitho</string>
+    <string name="ok">OKI</string>
+    <string name="param_tres">Paramètre</string>
+    <string name="password">Mot de Passe</string>
+    <string name="poids">Poids</string>
+    <string name="prenom">Prénom</string>
+    <string name="register">Inscription</string>
+    <string name="suppression">Supprimession</string>
+    <string name="taille">Taille</string>
+    <string name="text">Text</string>
+    <string name="username">UserName</string>
+    <string name="observations">ObservationFR</string>
+    <string name="ornithologue">OrnithologueFR</string>
+    <string name="oiseaux">Oiseaux</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:actionLayout="@layout/activity_add_oiseau"
+        android:id="@+id/AddButton"
+        android:title="@string/BTNADD"/>
+
+</menu>

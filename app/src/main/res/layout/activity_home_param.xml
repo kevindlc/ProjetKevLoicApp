@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kev.projetkevloic.activity.activity_home_param">
+
+<ImageView
+    android:layout_width="49dp"
+    android:layout_height="33dp"
+    android:src="@drawable/ic_all"
+    android:layout_marginLeft="34dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="167dp"
+    android:id="@+id/imageView2" />
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="37dp"
+        android:src="@drawable/ic_en"
+        app:layout_constraintLeft_toRightOf="@+id/imageView2"
+        android:layout_marginLeft="82dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="163dp"
+        android:id="@+id/imageView3" />
+
+    <ImageView
+        android:layout_width="49dp"
+        android:layout_height="33dp"
+        android:src="@drawable/ic_fr"
+        app:layout_constraintLeft_toRightOf="@+id/imageView3"
+        android:layout_marginLeft="74dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="163dp" />
+
+    <Button
+        android:id="@+id/FR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FRANCAIS"
+        android:onClick="changeToFR"
+        android:background="@drawable/mybutton"
+        app:layout_constraintLeft_toRightOf="@+id/ENG"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="217dp" />
+
+
+    <TextView
+        android:id="@+id/textViewSQL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/ALL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mybutton"
+        android:text="Deutsch"
+        android:onClick="changeToALL"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="217dp" />
+
+    <Button
+        android:id="@+id/ENG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mybutton"
+        android:clickable="true"
+        android:text="ENGLISH"
+        android:onClick="changeToEN"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="217dp"
+        app:layout_constraintLeft_toRightOf="@+id/ALL"
+        android:layout_marginLeft="44dp" />
+
+</android.support.constraint.ConstraintLayout>
