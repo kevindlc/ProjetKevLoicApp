@@ -17,9 +17,8 @@ public class Login extends AppCompatActivity {
     Button buttonRegister;
     Button buttonLogin;
     OrnithoDB rDB ;
-// dsalfdjafda
-    //test
 
+// SALUT C EST UN TEST
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
