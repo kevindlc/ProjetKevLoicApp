@@ -1,8 +1,10 @@
 package com.example.kev.projetkevloic.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,9 @@ import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.R;
 import com.example.kev.projetkevloic.View.add.addOrni;
 import com.example.kev.projetkevloic.View.home.MainActivity;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskObservation;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOiseau;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOrnithologue;
 
 public class Login extends AppCompatActivity {
 
@@ -21,6 +26,10 @@ public class Login extends AppCompatActivity {
 // SALUT C EST UN TEST
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         buttonLogin = (Button) findViewById(R.id.butLog);
