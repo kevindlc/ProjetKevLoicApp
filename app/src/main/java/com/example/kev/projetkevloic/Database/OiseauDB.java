@@ -12,6 +12,7 @@ package com.example.kev.projetkevloic.Database;
         import android.util.Log;
 
         import com.example.kev.projetkevloic.object.Oiseau;
+        import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOiseau;
 
 /**
  * Created by carob on 4/28/2017.
@@ -231,26 +232,25 @@ public class OiseauDB {
             Oiseau.setTaille(o.getTaille());
             Oiseau.setText(o.getText());
 
-            new EndpointsAsyncTaskOiseau(Oiseau, dbHelperHelper).execute();
+            new EndpointsAsyncTaskOiseau(Oiseau, dbHelper).execute();
         }
         Log.e("debugCloud","all Oiseau data saved");
     }
 
-    public void cloudToSqlOiseau(List<com.example.kev.myapplication.backend.OiseauApi.model.Oiseau> items){
+    public void cloudToSqlOiseau(List<com.example.kev.myapplication.backend.oiseauApi.model.Oiseau> items){
         SQLiteDatabase sqldbHelper = dbHelper.getReadableDatabase();
-        sqldbHelper.delete(, null, null);
+        sqldbHelper.delete(dbHelper.TABLE_OISEAU, null, null);
 
         for (com.example.kev.myapplication.backend.oiseauApi.model.Oiseau o : items) {
             ContentValues values = new ContentValues();
             values.put(dbHelper.OISEAU_ID, o.getId());
-            values.put(dbHelper.getKEY_EMAIL(), p.getEmail());
-            values.put(dbHelper.getKEY_PASSWORD(), p.getPassword());
-            values.put(dbHelper.getKEY_FIRSTNAME(), p.getFirstname());
-            values.put(dbHelper.getKEY_LASTNAME(), p.getLastname());
-            if(p.getAdmin() == null)
-                values.put(dbHelper.getKEY_ISADMIN(), 0);
+            values.put(dbHelper.OISEAU_COLOR,o.getColor());
+            values.put(dbHelper.OISEAU_NAME, o.getNom());
+            values.put(dbHelper.OISEAU_POIDS, o.getPoids());
+            values.put(dbHelper.OISEAU_TEXT, o.getText());
 
-            sqldbHelper.insert(dbHelper.getTABLE_Oiseau(), null, values);
+
+            sqldbHelper.insert(dbHelper.TABLE_OISEAU ,null, values);
         }
         sqldbHelper.close();
         Log.e("debugCloud","all Oiseau data got");

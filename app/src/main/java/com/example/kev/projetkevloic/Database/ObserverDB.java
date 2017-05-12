@@ -193,5 +193,42 @@ public class ObserverDB {
     }
 
 
+    public void sqlToCloudObservation(){
+        List<Observation> people = getAllObservations();
+        for (Observation p : people) {
+            com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
+            Observation.setId((long) p.getId());
+            Observation.setIdCanton((long) p.getIdCanton());
+            Observation.setEmail(p.getEmail());
+            Observation.setPassword(p.getPassword());
+            Observation.setFirstname(p.getFirstname());
+            Observation.setLastname(p.getLastname());
+            Observation.setAdmin(p.isAdmin());
+            new ObservationAsyncTask(Observation, db).execute();
+        }
+        Log.e("debugCloud","all Observation data saved");
+    }
+
+    public void cloudToSqlObservation(List<com.example.pedro.myapplication.backend.ObservationApi.model.Observation> items){
+        SQLiteDatabase sqlDB = db.getReadableDatabase();
+        sqlDB.delete(db.getTABLE_Observation(), null, null);
+
+        for (com.example.pedro.myapplication.backend.ObservationApi.model.Observation p : items) {
+            ContentValues values = new ContentValues();
+            values.put(db.getKEY_ID(), p.getId());
+            values.put(db.getKEY_CANTONID(), p.getIdCanton());
+            values.put(db.getKEY_EMAIL(), p.getEmail());
+            values.put(db.getKEY_PASSWORD(), p.getPassword());
+            values.put(db.getKEY_FIRSTNAME(), p.getFirstname());
+            values.put(db.getKEY_LASTNAME(), p.getLastname());
+            if(p.getAdmin() == null)
+                values.put(db.getKEY_ISADMIN(), 0);
+
+            sqlDB.insert(db.getTABLE_Observation(), null, values);
+        }
+        sqlDB.close();
+        Log.e("debugCloud","all Observation data got");
+    }
+
 }
 

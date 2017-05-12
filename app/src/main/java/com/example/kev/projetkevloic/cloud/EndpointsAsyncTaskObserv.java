@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.kev.myapplication.backend.observationApi.model.Observation;
 import com.example.kev.myapplication.backend.observationApi.ObservationApi;
+import com.example.kev.myapplication.backend.oiseauApi.model.Oiseau;
 import com.example.kev.projetkevloic.Database.DatabaseHelper;
 import com.example.kev.projetkevloic.Database.ObserverDB;
 import com.example.kev.projetkevloic.Database.OiseauDB;
@@ -39,8 +40,15 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     private Context context;
 
 
-    public EndpointsAsyncTaskObserv(Context context) {
-        this.context = context;
+    public EndpointsAsyncTaskObserv(DatabaseHelper db, Login login) {
+        this.db = db;
+        this.login = login;
+    }
+
+    public EndpointsAsyncTaskObserv(Observation obs , DatabaseHelper db) {
+        this.observation = obs;
+        this.db = db;
+
     }
 
 
