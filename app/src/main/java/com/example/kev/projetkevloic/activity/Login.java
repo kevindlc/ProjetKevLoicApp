@@ -26,9 +26,6 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        new EndpointsAsyncTaskObserv(this).execute();
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         buttonLogin = (Button) findViewById(R.id.butLog);

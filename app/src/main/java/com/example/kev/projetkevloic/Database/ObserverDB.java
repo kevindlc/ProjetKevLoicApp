@@ -198,9 +198,9 @@ public class ObserverDB {
         List<Observation> observs = getAllObservations();
         for (Observation p : observs) {
             com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
-            Observation.setId( p.getId());
-            Observation.setOrni(p.getOrni());
-            Observation.setOiseau( p.getOiseau());
+            Observation.setId( (long) p.getId());
+            Observation.setOrni((long) p.getOrni());
+            Observation.setOiseau( (long) p.getOiseau());
             Observation.setText(p.getText());
 
 

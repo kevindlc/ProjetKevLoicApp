@@ -225,7 +225,7 @@ public class OiseauDB {
         List<Oiseau> people = getAllOiseaux();
         for (Oiseau o : people) {
             com.example.kev.myapplication.backend.oiseauApi.model.Oiseau Oiseau = new  com.example.kev.myapplication.backend.oiseauApi.model.Oiseau();
-            Oiseau.setId(o.getId());
+            Oiseau.setId((long) o.getId());
             Oiseau.setNom( o.getNom());
             Oiseau.setColor(o.getColor());
             Oiseau.setPoids(o.getPoids());

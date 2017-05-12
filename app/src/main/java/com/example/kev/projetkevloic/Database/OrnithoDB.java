@@ -167,7 +167,7 @@ public class OrnithoDB {
         List<Ornithologue> ornithos = getAllOrnithos();
         for (Ornithologue p : ornithos) {
             com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue Ornithologue = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
-            Ornithologue.setId( p.getId());
+            Ornithologue.setId( (long) p.getId());
             Ornithologue.setUsername(p.getUsername());
             Ornithologue.setPassword(p.getPassword());
             Ornithologue.setAge(p.getAge());
