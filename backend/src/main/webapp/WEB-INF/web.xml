@@ -5,7 +5,10 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.example.Kev.myapplication.backend.MyEndpoint</param-value>
+            <param-value>com.example.Kev.myapplication.backend.MyEndpoint,
+                com.example.Kev.myapplication.backend.ObservationEndpoint,
+                com.example.Kev.myapplication.backend.OiseauEndpoint,
+                com.example.Kev.myapplication.backend.OrnithologueEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

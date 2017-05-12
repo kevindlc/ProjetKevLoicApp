@@ -16,8 +16,8 @@ import javax.inject.Named;
         version = "v1",
         resource = "ornithologue",
         namespace = @ApiNamespace(
-                ownerDomain = "backend.myapplication.carob.example.com",
-                ownerName = "backend.myapplication.carob.example.com",
+                ownerDomain = "backend.myapplication.Kev.example.com",
+                ownerName = "backend.myapplication.Kev.example.com",
                 packagePath = ""
         )
 )
@@ -41,7 +41,7 @@ public class OrnithologueEndpoint {
     /**
      * This inserts a new <code>Ornithologue</code> object.
      *
-   * @param ornithologue The object to be added.
+     * @param ornithologue The object to be added.
      * @return The object to be added.
      */
     @ApiMethod(name = "insertOrnithologue")

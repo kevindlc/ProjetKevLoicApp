@@ -13,7 +13,7 @@ import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.R;
 import com.example.kev.projetkevloic.View.add.addOrni;
 import com.example.kev.projetkevloic.View.home.MainActivity;
-import com.example.kev.projetkevloic.cloud.EndpointsAsyncTask;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskObserv;
 
 
 public class Login extends AppCompatActivity {
@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        new EndpointsAsyncTaskObserv(this).execute();
 
 
         super.onCreate(savedInstanceState);

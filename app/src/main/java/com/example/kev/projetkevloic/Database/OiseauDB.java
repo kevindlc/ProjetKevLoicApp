@@ -220,5 +220,41 @@ public class OiseauDB {
 
     }
 
+    public void sqlToCloudOiseau(){
+        List<Oiseau> people = getAllOiseaux();
+        for (Oiseau o : people) {
+            com.example.kev.myapplication.backend.oiseauApi.model.Oiseau Oiseau = new  com.example.kev.myapplication.backend.oiseauApi.model.Oiseau();
+            Oiseau.setId(o.getId());
+            Oiseau.setNom( o.getNom());
+            Oiseau.setColor(o.getColor());
+            Oiseau.setPoids(o.getPoids());
+            Oiseau.setTaille(o.getTaille());
+            Oiseau.setText(o.getText());
+
+            new EndpointsAsyncTaskOiseau(Oiseau, dbHelperHelper).execute();
+        }
+        Log.e("debugCloud","all Oiseau data saved");
+    }
+
+    public void cloudToSqlOiseau(List<com.example.kev.myapplication.backend.OiseauApi.model.Oiseau> items){
+        SQLiteDatabase sqldbHelper = dbHelper.getReadableDatabase();
+        sqldbHelper.delete(, null, null);
+
+        for (com.example.kev.myapplication.backend.oiseauApi.model.Oiseau o : items) {
+            ContentValues values = new ContentValues();
+            values.put(dbHelper.OISEAU_ID, o.getId());
+            values.put(dbHelper.getKEY_EMAIL(), p.getEmail());
+            values.put(dbHelper.getKEY_PASSWORD(), p.getPassword());
+            values.put(dbHelper.getKEY_FIRSTNAME(), p.getFirstname());
+            values.put(dbHelper.getKEY_LASTNAME(), p.getLastname());
+            if(p.getAdmin() == null)
+                values.put(dbHelper.getKEY_ISADMIN(), 0);
+
+            sqldbHelper.insert(dbHelper.getTABLE_Oiseau(), null, values);
+        }
+        sqldbHelper.close();
+        Log.e("debugCloud","all Oiseau data got");
+    }
+
 
 }

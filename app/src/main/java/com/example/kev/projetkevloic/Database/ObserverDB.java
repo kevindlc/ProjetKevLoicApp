@@ -46,6 +46,9 @@ public class ObserverDB {
 
     public ObserverDB(Context context) { dbHelper = new DatabaseHelper(context);};
 
+    public ObserverDB(DatabaseHelper db) {
+    }
+
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
