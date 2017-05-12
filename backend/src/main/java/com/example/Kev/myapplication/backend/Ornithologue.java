@@ -10,7 +10,7 @@ public class Ornithologue {
 
 
     @Id
-    private int id;
+    private long id;
     private String username;
     private String password;
     private String age;
@@ -25,7 +25,7 @@ public class Ornithologue {
 
     public Ornithologue(){}
 
-    public Ornithologue(int id, String username, String password, String age, String canton) {
+    public Ornithologue(long id, String username, String password, String age, String canton) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -33,11 +33,11 @@ public class Ornithologue {
         this.canton = canton;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

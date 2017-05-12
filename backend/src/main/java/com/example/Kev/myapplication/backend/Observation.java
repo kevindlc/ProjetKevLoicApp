@@ -10,9 +10,9 @@ public class Observation {
 
 
     @Id
-    private int id;
-    private int orni;
-    private int oiseau;
+    private long id;
+    private long orni;
+    private long oiseau;
     private String text;
     private String orniN;
     private String oiseauN;
@@ -33,7 +33,7 @@ public class Observation {
         this.oiseauN = oiseauN;
     }
 
-    public Observation(int orni, int oiseau, String text) {
+    public Observation(long orni, long oiseau, String text) {
         this.orni = orni;
         this.oiseau = oiseau;
         this.text = text;
@@ -41,34 +41,34 @@ public class Observation {
 
     public Observation() {}
 
-    public Observation(int id, int orni, int oiseau, String text) {
+    public Observation(long id, long orni, long oiseau, String text) {
         this.id = id;
         this.orni = orni;
         this.oiseau = oiseau;
         this.text = text;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getOrni() {
+    public long getOrni() {
         return orni;
     }
 
-    public void setOrni(int orni) {
+    public void setOrni(long orni) {
         this.orni = orni;
     }
 
-    public int getOiseau() {
+    public long getOiseau() {
         return oiseau;
     }
 
-    public void setOiseau(int oiseau) {
+    public void setOiseau(long oiseau) {
         this.oiseau = oiseau;
     }
 

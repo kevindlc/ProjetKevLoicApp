@@ -11,7 +11,7 @@ public class Oiseau {
 
 
     @Id
-    private int id;
+    private long id;
     private String nom;
     private String color;
     private String poids;
@@ -19,7 +19,7 @@ public class Oiseau {
     private String text;
 
 
-    public Oiseau(int id, String nom, String color, String poids, String taille, String text) {
+    public Oiseau(long id, String nom, String color, String poids, String taille, String text) {
         this.id = id;
         this.nom = nom;
         this.color = color;
@@ -47,11 +47,11 @@ public class Oiseau {
     public Oiseau() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

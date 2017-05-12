@@ -163,5 +163,41 @@ public class OrnithoDB {
         return id;
     }
 
+    public void sqlToCloudOrnithologue(){
+        List<Ornithologue> ornithos = getAllOrnithos();
+        for (Ornithologue p : ornithos) {
+            com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue Ornithologue = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
+            Ornithologue.setId( p.getId());
+            Ornithologue.setUsername(p.getUsername());
+            Ornithologue.setPassword(p.getPassword());
+            Ornithologue.setAge(p.getAge());
+            Ornithologue.setCanton(p.getCanton());
+
+            new OrnithologueAsyncTask(Ornithologue, db).execute();
+        }
+        Log.e("debugCloud","all Ornithologue data saved");
+    }
+
+    public void cloudToSqlOrnithologue(List<com.example.kev.myapplication.backend.OrnithologueApi.model.Ornithologue> ornithos){
+        SQLiteDatabase sqlDB = db.getReadableDatabase();
+        sqlDB.delete(db.getTABLE_Ornithologue(), null, null);
+
+        for (com.example.kev.myapplication.backend.OrnithologueApi.model.Ornithologue p : ornithos) {
+            ContentValues values = new ContentValues();
+            values.put(db.getKEY_ID(), p.getId());
+            values.put(db.getKEY_Username(), p.getUsername());
+            values.put(db.getKEY_Password(), p.getPassword());
+            values.put(db.getKEY_Age(), p.getAge());
+            values.put(db.getKEY_Canton(), p.getCanton());
+
+            if(p.getAdmin() == null)
+                values.put(db.getKEY_ISADMIN(), 0);
+
+            sqlDB.insert(db.getTABLE_Ornithologue(), null, values);
+        }
+        sqlDB.close();
+        Log.e("debugCloud","all Ornithologue data got");
+    }
+
 
 }
