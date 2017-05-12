@@ -4,24 +4,27 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
-import com.googlecode.objectify.NotFoundException;
-import com.example.Kev.myapplication.backend.Observation;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
-import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-import javax.inject.Named;
 import javax.annotation.Nullable;
+import javax.inject.Named;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
- * An endpoint class we are exposing
+ * WARNING: This generated code is intended as a sample or starting point for using a
+ * Google Cloud Endpoints RESTful API with an Objectify entity. It provides no data access
+ * restrictions and no data validation.
+ * <p>
+ * DO NOT deploy this code unchanged as part of a real application to real users.
  */
 @Api(
         name = "observationApi",
@@ -35,10 +38,9 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 )
 public class ObservationEndpoint {
 
-    private static final int DEFAULT_LIST_LIMIT = 20;
-
     private static final Logger logger = Logger.getLogger(ObservationEndpoint.class.getName());
 
+    private static final int DEFAULT_LIST_LIMIT = 20;
 
     static {
         // Typically you would register this inside an OfyServive wrapper. See: https://code.google.com/p/objectify-appengine/wiki/BestPractices
@@ -46,50 +48,52 @@ public class ObservationEndpoint {
     }
 
     /**
-     * This method gets the <code>Observation</code> object associated with the specified <code>id</code>.
+     * Returns the {@link Observation} with the corresponding ID.
      *
-     * @param id The id of the object to be returned.
-     * @return The <code>Observation</code> associated with <code>id</code>.
+     * @param id the ID of the entity to be retrieved
+     * @return the entity with the corresponding ID
+     * @throws NotFoundException if there is no {@code Observation} with the provided ID.
      */
     @ApiMethod(
             name = "get",
             path = "observation/{id}",
             httpMethod = ApiMethod.HttpMethod.GET)
-    public Observation get(@Named("id") Long id) throws NotFoundException {
-        Observation obs = ofy().load().type(Observation.class).id(id).now();
-        if(obs == null){
-            throw new NotFoundException();
+    public Observation get(@Named("id") long id) throws NotFoundException {
+        logger.info("Getting Observation with ID: " + id);
+        Observation observation = ofy().load().type(Observation.class).id(id).now();
+        if (observation == null) {
+            throw new NotFoundException("Could not find Observation with ID: " + id);
         }
-        logger.info("Calling getObservation method");
-        return obs;
+        return observation;
     }
 
     /**
-     * This inserts a new <code>Observation</code> object.
-     *
-     * @param observation The object to be added.
-     * @return The object to be added.
+     * Inserts a new {@code Observation}.
      */
     @ApiMethod(
             name = "insert",
             path = "observation",
             httpMethod = ApiMethod.HttpMethod.POST)
     public Observation insert(Observation observation) {
-
+        // Typically in a RESTful API a POST does not have a known ID (assuming the ID is used in the resource path).
+        // You should validate that observation.id has not been set. If the ID type is not supported by the
+        // Objectify ID generator, e.g. long or String, then you should generate the unique ID yourself prior to saving.
+        //
+        // If your client provides the ID then you should probably use PUT instead.
         ofy().save().entity(observation).now();
-        logger.info("Created observation with ID: " + observation.getId());
+        logger.info("Created Observation with ID: " + observation.getId());
+
         return ofy().load().entity(observation).now();
     }
 
-
     /**
-     * Updates an existing {@code Person}.
+     * Updates an existing {@code Observation}.
      *
-     * @param id     the ID of the entity to be updated
+     * @param id          the ID of the entity to be updated
      * @param observation the desired state of the entity
      * @return the updated version of the entity
      * @throws NotFoundException if the {@code id} does not correspond to an existing
-     *                           {@code Person}
+     *                           {@code Observation}
      */
     @ApiMethod(
             name = "update",
@@ -99,16 +103,16 @@ public class ObservationEndpoint {
         // TODO: You should validate your ID parameter against your resource's ID here.
         checkExists(id);
         ofy().save().entity(observation).now();
-        logger.info("Updated Person: " + observation);
+        logger.info("Updated Observation: " + observation);
         return ofy().load().entity(observation).now();
     }
 
     /**
-     * Deletes the specified {@code observation}.
+     * Deletes the specified {@code Observation}.
      *
      * @param id the ID of the entity to delete
      * @throws NotFoundException if the {@code id} does not correspond to an existing
-     *                           {@code Person}
+     *                           {@code Observation}
      */
     @ApiMethod(
             name = "remove",
@@ -149,7 +153,7 @@ public class ObservationEndpoint {
         try {
             ofy().load().type(Observation.class).id(id).safe();
         } catch (com.googlecode.objectify.NotFoundException e) {
-            throw new NotFoundException();
+            throw new NotFoundException("Could not find Observation with ID: " + id);
         }
     }
 }

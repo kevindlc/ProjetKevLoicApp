@@ -3,17 +3,28 @@ package com.example.Kev.myapplication.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.googlecode.objectify.NotFoundException;
-import com.sun.org.apache.xpath.internal.operations.Or;
+import com.google.api.server.spi.response.CollectionResponse;
+import com.google.api.server.spi.response.NotFoundException;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.Nullable;
 import javax.inject.Named;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
- * An endpoint class we are exposing
+ * WARNING: This generated code is intended as a sample or starting point for using a
+ * Google Cloud Endpoints RESTful API with an Objectify entity. It provides no data access
+ * restrictions and no data validation.
+ * <p>
+ * DO NOT deploy this code unchanged as part of a real application to real users.
  */
 @Api(
         name = "ornithologueApi",
@@ -29,32 +40,120 @@ public class OrnithologueEndpoint {
 
     private static final Logger logger = Logger.getLogger(OrnithologueEndpoint.class.getName());
 
-    /**
-     * This method gets the <code>Ornithologue</code> object associated with the specified <code>id</code>.
-     *
-     * @param id The id of the object to be returned.
-     * @return The <code>Ornithologue</code> associated with <code>id</code>.
-     */
-    @ApiMethod(name = "getOrnithologue")
-    public Ornithologue getOrnithologue(@Named("id") Long id) {
-        Ornithologue orni = ofy().load().type(Ornithologue.class).id(id).now();
-        if(orni == null){
-            throw new NotFoundException();
-        }
-        logger.info("Calling getObservation method");
-        return orni;
+    private static final int DEFAULT_LIST_LIMIT = 20;
+
+    static {
+        // Typically you would register this inside an OfyServive wrapper. See: https://code.google.com/p/objectify-appengine/wiki/BestPractices
+        ObjectifyService.register(Ornithologue.class);
     }
 
     /**
-     * This inserts a new <code>Ornithologue</code> object.
+     * Returns the {@link Ornithologue} with the corresponding ID.
      *
-     * @param ornithologue The object to be added.
-     * @return The object to be added.
+     * @param id the ID of the entity to be retrieved
+     * @return the entity with the corresponding ID
+     * @throws NotFoundException if there is no {@code Ornithologue} with the provided ID.
      */
-    @ApiMethod(name = "insertOrnithologue")
-    public Ornithologue insertOrnithologue(Ornithologue ornithologue) {
+    @ApiMethod(
+            name = "get",
+            path = "ornithologue/{id}",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public Ornithologue get(@Named("id") long id) throws NotFoundException {
+        logger.info("Getting Ornithologue with ID: " + id);
+        Ornithologue ornithologue = ofy().load().type(Ornithologue.class).id(id).now();
+        if (ornithologue == null) {
+            throw new NotFoundException("Could not find Ornithologue with ID: " + id);
+        }
+        return ornithologue;
+    }
+
+    /**
+     * Inserts a new {@code Ornithologue}.
+     */
+    @ApiMethod(
+            name = "insert",
+            path = "ornithologue",
+            httpMethod = ApiMethod.HttpMethod.POST)
+    public Ornithologue insert(Ornithologue ornithologue) {
+        // Typically in a RESTful API a POST does not have a known ID (assuming the ID is used in the resource path).
+        // You should validate that ornithologue.id has not been set. If the ID type is not supported by the
+        // Objectify ID generator, e.g. long or String, then you should generate the unique ID yourself prior to saving.
+        //
+        // If your client provides the ID then you should probably use PUT instead.
         ofy().save().entity(ornithologue).now();
-        logger.info("Created observation with ID: " + ornithologue.getId());
+        logger.info("Created Ornithologue with ID: " + ornithologue.getId());
+
         return ofy().load().entity(ornithologue).now();
+    }
+
+    /**
+     * Updates an existing {@code Ornithologue}.
+     *
+     * @param id           the ID of the entity to be updated
+     * @param ornithologue the desired state of the entity
+     * @return the updated version of the entity
+     * @throws NotFoundException if the {@code id} does not correspond to an existing
+     *                           {@code Ornithologue}
+     */
+    @ApiMethod(
+            name = "update",
+            path = "ornithologue/{id}",
+            httpMethod = ApiMethod.HttpMethod.PUT)
+    public Ornithologue update(@Named("id") long id, Ornithologue ornithologue) throws NotFoundException {
+        // TODO: You should validate your ID parameter against your resource's ID here.
+        checkExists(id);
+        ofy().save().entity(ornithologue).now();
+        logger.info("Updated Ornithologue: " + ornithologue);
+        return ofy().load().entity(ornithologue).now();
+    }
+
+    /**
+     * Deletes the specified {@code Ornithologue}.
+     *
+     * @param id the ID of the entity to delete
+     * @throws NotFoundException if the {@code id} does not correspond to an existing
+     *                           {@code Ornithologue}
+     */
+    @ApiMethod(
+            name = "remove",
+            path = "ornithologue/{id}",
+            httpMethod = ApiMethod.HttpMethod.DELETE)
+    public void remove(@Named("id") long id) throws NotFoundException {
+        checkExists(id);
+        ofy().delete().type(Ornithologue.class).id(id).now();
+        logger.info("Deleted Ornithologue with ID: " + id);
+    }
+
+    /**
+     * List all entities.
+     *
+     * @param cursor used for pagination to determine which page to return
+     * @param limit  the maximum number of entries to return
+     * @return a response that encapsulates the result list and the next page token/cursor
+     */
+    @ApiMethod(
+            name = "list",
+            path = "ornithologue",
+            httpMethod = ApiMethod.HttpMethod.GET)
+    public CollectionResponse<Ornithologue> list(@Nullable @Named("cursor") String cursor, @Nullable @Named("limit") Integer limit) {
+        limit = limit == null ? DEFAULT_LIST_LIMIT : limit;
+        Query<Ornithologue> query = ofy().load().type(Ornithologue.class).limit(limit);
+        if (cursor != null) {
+            query = query.startAt(Cursor.fromWebSafeString(cursor));
+        }
+        QueryResultIterator<Ornithologue> queryIterator = query.iterator();
+        List<Ornithologue> ornithologueList = new ArrayList<Ornithologue>(limit);
+        while (queryIterator.hasNext()) {
+            ornithologueList.add(queryIterator.next());
+        }
+        return CollectionResponse.<Ornithologue>builder().setItems(ornithologueList).setNextPageToken(queryIterator.getCursor().toWebSafeString()).build();
+    }
+
+    private void checkExists(long id) throws NotFoundException {
+        try {
+            ofy().load().type(Ornithologue.class).id(id).safe();
+        } catch (com.googlecode.objectify.NotFoundException e) {
+            throw new NotFoundException("Could not find Ornithologue with ID: " + id);
+        }
     }
 }

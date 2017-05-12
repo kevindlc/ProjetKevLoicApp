@@ -1,15 +1,21 @@
 package com.example.Kev.myapplication.backend;
 
+import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  * Created by Kev on 26.04.2017.
  */
 
+@Entity
 public class Observation {
 
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long orni;
     private long oiseau;
