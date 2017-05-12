@@ -13,9 +13,8 @@ import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.R;
 import com.example.kev.projetkevloic.View.add.addOrni;
 import com.example.kev.projetkevloic.View.home.MainActivity;
-import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskObservation;
-import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOiseau;
-import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOrnithologue;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTask;
+
 
 public class Login extends AppCompatActivity {
 
