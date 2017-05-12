@@ -7,7 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kev.projetkevloic.object.Oiseau;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOrnitho;
 import com.example.kev.projetkevloic.object.Ornithologue;
 
 import java.util.ArrayList;
@@ -173,27 +173,26 @@ public class OrnithoDB {
             Ornithologue.setAge(p.getAge());
             Ornithologue.setCanton(p.getCanton());
 
-            new OrnithologueAsyncTask(Ornithologue, db).execute();
+            new EndpointsAsyncTaskOrnitho(Ornithologue, dbHelper).execute();
         }
         Log.e("debugCloud","all Ornithologue data saved");
     }
 
-    public void cloudToSqlOrnithologue(List<com.example.kev.myapplication.backend.OrnithologueApi.model.Ornithologue> ornithos){
-        SQLiteDatabase sqlDB = db.getReadableDatabase();
-        sqlDB.delete(db.getTABLE_Ornithologue(), null, null);
+    public void cloudToSqlOrnithologue(List<com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue> ornithos){
+        SQLiteDatabase sqlDB = dbHelper.getReadableDatabase();
+        sqlDB.delete(dbHelper.TABLE_ORNITHO, null, null);
 
-        for (com.example.kev.myapplication.backend.OrnithologueApi.model.Ornithologue p : ornithos) {
+        for (com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue p : ornithos) {
             ContentValues values = new ContentValues();
-            values.put(db.getKEY_ID(), p.getId());
-            values.put(db.getKEY_Username(), p.getUsername());
-            values.put(db.getKEY_Password(), p.getPassword());
-            values.put(db.getKEY_Age(), p.getAge());
-            values.put(db.getKEY_Canton(), p.getCanton());
+            values.put(dbHelper.ORNITHO_ID, (long) p.getId());
+            values.put(dbHelper.ORNITHO_USERNAME, p.getUsername());
+            values.put(dbHelper.ORNITHO_PASSWORD, p.getPassword());
+            values.put(dbHelper.ORNITHO_AGE, p.getAge());
+            values.put(dbHelper.ORNITHO_CANTON, p.getCanton());
 
-            if(p.getAdmin() == null)
-                values.put(db.getKEY_ISADMIN(), 0);
 
-            sqlDB.insert(db.getTABLE_Ornithologue(), null, values);
+
+            sqlDB.insert(dbHelper.TABLE_ORNITHO, null, values);
         }
         sqlDB.close();
         Log.e("debugCloud","all Ornithologue data got");

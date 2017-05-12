@@ -2,8 +2,6 @@ package com.example.kev.projetkevloic.cloud;
 
 import android.os.AsyncTask;
 
-import com.example.kev.myapplication.backend.myApi.MyApi;
-import com.example.kev.myapplication.backend.oiseauApi.model.Oiseau;
 import com.example.kev.myapplication.backend.ornithologueApi.OrnithologueApi;
 import com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue;
 import com.example.kev.projetkevloic.Database.DatabaseHelper;
@@ -21,7 +19,7 @@ import java.util.List;
  * Created by Kev on 11.05.2017.
  */
 
-class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Oiseau>> {
+public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornithologue>> {
     private static OrnithologueApi ornithologueApi = null;
     private static final String TAG = EndpointsAsyncTaskOrnitho.class.getName();
     private Ornithologue ornithologue;

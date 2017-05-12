@@ -215,9 +215,9 @@ public class ObserverDB {
 
         for (com.example.kev.myapplication.backend.observationApi.model.Observation p : observs) {
             ContentValues values = new ContentValues();
-            values.put(dbHelper.OBSERVATION_ID, p.getId());
-            values.put(dbHelper.OBSERVATION_ORNITHO, p.getOrni());
-            values.put(dbHelper.OBSERVATION_OISEAU, p.getOiseau());
+            values.put(dbHelper.OBSERVATION_ID,(long) p.getId());
+            values.put(dbHelper.OBSERVATION_ORNITHO, (long) p.getOrni());
+            values.put(dbHelper.OBSERVATION_OISEAU, (long) p.getOiseau());
             values.put(dbHelper.OBSERVATION_TEXT, p.getText());
 
 

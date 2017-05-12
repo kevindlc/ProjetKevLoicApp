@@ -243,7 +243,7 @@ public class OiseauDB {
 
         for (com.example.kev.myapplication.backend.oiseauApi.model.Oiseau o : items) {
             ContentValues values = new ContentValues();
-            values.put(dbHelper.OISEAU_ID, o.getId());
+            values.put(dbHelper.OISEAU_ID, (long) o.getId());
             values.put(dbHelper.OISEAU_COLOR,o.getColor());
             values.put(dbHelper.OISEAU_NAME, o.getNom());
             values.put(dbHelper.OISEAU_POIDS, o.getPoids());
