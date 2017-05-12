@@ -39,6 +39,7 @@ public class ObservationEndpoint {
 
     private static final Logger logger = Logger.getLogger(ObservationEndpoint.class.getName());
 
+
     static {
         // Typically you would register this inside an OfyServive wrapper. See: https://code.google.com/p/objectify-appengine/wiki/BestPractices
         ObjectifyService.register(Observation.class);
@@ -54,7 +55,7 @@ public class ObservationEndpoint {
             name = "get",
             path = "observation/{id}",
             httpMethod = ApiMethod.HttpMethod.GET)
-    public Observation getObservation(@Named("id") Long id) throws NotFoundException {
+    public Observation get(@Named("id") Long id) throws NotFoundException {
         Observation obs = ofy().load().type(Observation.class).id(id).now();
         if(obs == null){
             throw new NotFoundException();
@@ -73,7 +74,8 @@ public class ObservationEndpoint {
             name = "insert",
             path = "observation",
             httpMethod = ApiMethod.HttpMethod.POST)
-    public Observation insertObservation(Observation observation) {
+    public Observation insert(Observation observation) {
+
         ofy().save().entity(observation).now();
         logger.info("Created observation with ID: " + observation.getId());
         return ofy().load().entity(observation).now();

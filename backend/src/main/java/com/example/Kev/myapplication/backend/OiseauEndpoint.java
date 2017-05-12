@@ -3,10 +3,13 @@ package com.example.Kev.myapplication.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.googlecode.objectify.NotFoundException;
 
 import java.util.logging.Logger;
 
 import javax.inject.Named;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
  * An endpoint class we are exposing
@@ -33,9 +36,12 @@ public class OiseauEndpoint {
      */
     @ApiMethod(name = "getOiseau")
     public Oiseau getOiseau(@Named("id") Long id) {
-        // TODO: Implement this function
-        logger.info("Calling getOiseau method");
-        return null;
+        Oiseau ois = ofy().load().type(Oiseau.class).id(id).now();
+        if(ois == null){
+            throw new NotFoundException();
+        }
+        logger.info("Calling getObservation method");
+        return ois;
     }
 
     /**
@@ -46,8 +52,8 @@ public class OiseauEndpoint {
      */
     @ApiMethod(name = "insertOiseau")
     public Oiseau insertOiseau(Oiseau oiseau) {
-        // TODO: Implement this function
-        logger.info("Calling insertOiseau method");
-        return oiseau;
+        ofy().save().entity(oiseau).now();
+        logger.info("Created observation with ID: " + oiseau.getId());
+        return ofy().load().entity(oiseau).now();
     }
 }
