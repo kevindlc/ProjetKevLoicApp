@@ -17,6 +17,9 @@ import java.io.IOException;
  * Created by Kev on 11.05.2017.
  */
 
+
+//TEST COMMIT
+
 class EndpointsAsyncTaskObserv extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
