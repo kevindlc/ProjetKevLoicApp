@@ -94,6 +94,7 @@ public class Login extends AppCompatActivity {
 
     }
 
+
     public static void sqliteToCloud() {
 
         Log.d("sqlitcoulod","fasdf");
