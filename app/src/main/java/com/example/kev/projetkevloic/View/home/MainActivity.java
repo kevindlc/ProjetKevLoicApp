@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         //methodes pour remplir ou vider les tables
 
-        deleteObservation();
-        deleteOiseau();
-        deleteOrnitho();
+        //deleteObservation();
+        //deleteOiseau();
+        //deleteOrnitho();
         //creationOiseau();
         //creationOrnitho();
         //creationObservations();

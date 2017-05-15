@@ -1,9 +1,12 @@
 package com.example.kev.projetkevloic.cloud;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.example.kev.myapplication.backend.observationApi.model.Observation;
 import com.example.kev.myapplication.backend.oiseauApi.OiseauApi;
 import com.example.kev.myapplication.backend.oiseauApi.model.Oiseau;
+import com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue;
 import com.example.kev.projetkevloic.Database.DatabaseHelper;
 import com.example.kev.projetkevloic.activity.Login;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -25,6 +28,9 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     private Oiseau oiseau;
     private DatabaseHelper db;
     private Login login = null;
+
+    public EndpointsAsyncTaskOiseau() {
+    }
 
     public EndpointsAsyncTaskOiseau(DatabaseHelper db, Login login) {
         this.db = db;
@@ -56,14 +62,46 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
             oiseauApi = builder.build();
         }
 
-        return new ArrayList<Oiseau>();
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(oiseau != null){
+                oiseauApi.insert(oiseau).execute();
+                Log.i(TAG, "insert actor");
+            }
+            // and for instance return the list of all employees
+            return oiseauApi.list().execute().getItems();
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+            return new ArrayList<Oiseau>();
 
 
+        }
     }
 
+    @Override
+    protected void onPostExecute(List<Oiseau> oiseaux) {
+        Log.d("ON VERA", "INTOC ecutendoipintstaskobiseau11");
+
+        if(oiseaux != null) {
+            for (Oiseau s: oiseaux) {
+
+                Log.d("ON VERA", "INTOC ecutendoipintstaskooiseau222");
+
+                String nom = s.getNom();
+                String color = s.getColor();
+                String poids = s.getPoids();
+                String taille = s.getTaille();
+                String text = s.getText();
+
+                Login.oDB.createOiseau(nom, color, taille, poids , text);
+
+            }
+        }
+    }
+
+
 }
-
-
-
 
 

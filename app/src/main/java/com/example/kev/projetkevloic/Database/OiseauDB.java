@@ -223,7 +223,9 @@ public class OiseauDB {
 
     public void sqlToCloudOiseau(){
         List<Oiseau> people = getAllOiseaux();
+
         for (Oiseau o : people) {
+            Log.d("OISA", "OIS");
             com.example.kev.myapplication.backend.oiseauApi.model.Oiseau Oiseau = new  com.example.kev.myapplication.backend.oiseauApi.model.Oiseau();
             Oiseau.setId((long) o.getId());
             Oiseau.setNom( o.getNom());

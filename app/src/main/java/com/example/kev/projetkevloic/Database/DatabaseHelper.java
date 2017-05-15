@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "birdl.db";
 
 
-    public static final String TABLE_OISEAU = "oiseaux_table";
+    public static final String TABLE_OISEAU = " oiseaux_table ";
     public static final String OISEAU_ID = "ID";
     public static final String OISEAU_NAME = "NOM";
     public static final String OISEAU_TEXT = "TEXT";
@@ -99,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXIST " + TABLE_OISEAU);
+        db.execSQL("DROP TABLE IFF EXIST " + TABLE_OISEAU);
         db.execSQL("DROP TABLE IF EXIST " + TABLE_ORNITHO);
         db.execSQL("DROP TABLE IF EXIST " + TABLE_OBSERVATION);
 
@@ -115,6 +115,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_OISEAU,null,null);
         db.delete(TABLE_ORNITHO,null,null);
         db.delete(TABLE_OBSERVATION,null,null);
+    }
+
+    public void resetDatabase(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_OISEAU);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORNITHO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_OBSERVATION);
+
+        db.execSQL(query);
+        db.execSQL(query1);
+        db.execSQL(query2);
+
+
     }
 
 

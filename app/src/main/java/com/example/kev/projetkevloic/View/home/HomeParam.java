@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.kev.projetkevloic.R;
+import com.example.kev.projetkevloic.activity.Login;
 
 import java.util.Locale;
 
@@ -73,6 +74,15 @@ public class HomeParam extends AppCompatActivity {
 
         Intent intent = new Intent(HomeParam.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("ID_USER", ID_USER);
+        startActivity(intent);
+    }
+
+    public void cloud(View v) {
+
+        Login.sqliteToCloud();
+
+        Intent intent = new Intent(HomeParam.this, MainActivity.class);
         intent.putExtra("ID_USER", ID_USER);
         startActivity(intent);
     }

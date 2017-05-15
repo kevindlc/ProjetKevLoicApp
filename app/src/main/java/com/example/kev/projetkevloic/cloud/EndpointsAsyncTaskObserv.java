@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.kev.myapplication.backend.observationApi.model.Observation;
 import com.example.kev.myapplication.backend.observationApi.ObservationApi;
+import com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue;
 import com.example.kev.projetkevloic.Database.DatabaseHelper;
 import com.example.kev.projetkevloic.Database.ObserverDB;
 import com.example.kev.projetkevloic.activity.Login;
@@ -35,6 +36,9 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     private Login login = null;
 
 
+    public EndpointsAsyncTaskObserv() {
+
+    }
     public EndpointsAsyncTaskObserv(DatabaseHelper db, Login login) {
         this.db = db;
         this.login = login;
@@ -67,16 +71,42 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
             observationApi = builder.build();
         }
 
-        try {
-            if (observation != null) {
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(observation != null){
                 observationApi.insert(observation).execute();
-                Log.i(TAG, "insert person");
+                Log.i(TAG, "insert actor");
             }
+            // and for instance return the list of all employees
             return observationApi.list().execute().getItems();
-        } catch (IOException e) {
+
+        } catch (IOException e){
             Log.e(TAG, e.toString());
             return new ArrayList<Observation>();
+
         }
     }
 
+    @Override
+    protected void onPostExecute(List<Observation> observations) {
+        Log.d("ON VERA", "INTOC ecutendoipintstaskornitho11");
+
+        if(observations != null) {
+            for (Observation s:observations) {
+
+                Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
+
+                long idOi =  s.getOiseau();
+                long idOr = s.getOrni();
+                String text = s.getText();
+
+                Login.bDB.createObservation((int) idOi, (int) idOr, text);
+            }
+        }
+    }
+
+
 }
+
+

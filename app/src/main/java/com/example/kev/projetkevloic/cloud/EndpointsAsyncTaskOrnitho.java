@@ -1,10 +1,12 @@
 package com.example.kev.projetkevloic.cloud;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.kev.myapplication.backend.ornithologueApi.OrnithologueApi;
 import com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue;
 import com.example.kev.projetkevloic.Database.DatabaseHelper;
+import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.activity.Login;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -24,7 +26,11 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
     private static final String TAG = EndpointsAsyncTaskOrnitho.class.getName();
     private Ornithologue ornithologue;
     private DatabaseHelper db;
-    private Login login = null;
+    public Login login = null;
+
+
+    public EndpointsAsyncTaskOrnitho() {
+    }
 
     public EndpointsAsyncTaskOrnitho(DatabaseHelper db, Login login) {
         this.db = db;
@@ -56,8 +62,43 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
             ornithologueApi = builder.build();
         }
 
-        return new ArrayList<Ornithologue>();
 
+
+
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(ornithologue != null){
+                ornithologueApi.insert(ornithologue).execute();
+                Log.i(TAG, "insert actor");
+            }
+            // and for instance return the list of all employees
+            return ornithologueApi.list().execute().getItems();
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+            return new ArrayList<Ornithologue>();
+        }
+    }
+
+    @Override
+    protected void onPostExecute(List<Ornithologue> result) {
+
+        Log.d("ON VERA", "INTOC ecutendoipintstaskornitho11");
+
+        if(result != null) {
+            for (Ornithologue s:result) {
+
+                Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
+
+                String username = s.getUsername();
+                String password = s.getPassword();
+                String age = s.getAge();
+                String canton = s.getCanton();
+
+                Login.rDB.createOrnitho(username, password, age , canton);
+            }
+        }
 
 
     }
