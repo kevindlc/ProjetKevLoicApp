@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     OiseauDB oDB = new OiseauDB(this);
     OrnithoDB rDB = new OrnithoDB(this);
     ObserverDB bDB = new ObserverDB(this);
-    int ID_USER;
+    int  ID_USER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.butParam:
                 intent = new Intent(this, HomeParam.class);
-                this.startActivity(intent);
                 intent.putExtra("ID_USER", ID_USER);
+                this.startActivity(intent);
+
+
                 break;
 
             default:

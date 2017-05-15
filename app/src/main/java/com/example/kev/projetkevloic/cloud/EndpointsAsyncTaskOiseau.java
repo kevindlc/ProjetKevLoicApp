@@ -28,6 +28,8 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     private Oiseau oiseau;
     private DatabaseHelper db;
     private Login login = null;
+    public static long lastid;
+
 
     public EndpointsAsyncTaskOiseau() {
     }
@@ -88,6 +90,9 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
             for (Oiseau s: oiseaux) {
 
                 Log.d("ON VERA", "INTOC ecutendoipintstaskooiseau222");
+
+                long id = s.getId();
+                lastid = id;
 
                 String nom = s.getNom();
                 String color = s.getColor();

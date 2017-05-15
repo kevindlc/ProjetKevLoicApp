@@ -56,6 +56,22 @@ public class OrnithoDB {
         close();
     }
 
+    public void createOrnitho(long id, String username, String password, String age, String canton) {
+        open();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DatabaseHelper.ORNITHO_ID, id);
+        values.put(DatabaseHelper.ORNITHO_USERNAME, username);
+        values.put(DatabaseHelper.ORNITHO_PASSWORD, password);
+        values.put(DatabaseHelper.ORNITHO_AGE, age);
+        values.put(DatabaseHelper.ORNITHO_CANTON, canton);
+
+        database.insert(DatabaseHelper.TABLE_ORNITHO, null, values);
+
+        close();
+    }
+
     public void deleteOrnitho(int o) {
         open();
         database.delete(DatabaseHelper.TABLE_ORNITHO, DatabaseHelper.ORNITHO_ID + " = " + o, null);
@@ -119,7 +135,7 @@ public class OrnithoDB {
     }
 
     // get the ornitologue by the ID
-    public Ornithologue getOrnitho(int id) {
+    public Ornithologue getOrnitho(long id) {
         open();
         Cursor cursor = database.query(DatabaseHelper.TABLE_ORNITHO, allColumns, DatabaseHelper.ORNITHO_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
@@ -166,14 +182,21 @@ public class OrnithoDB {
     public void sqlToCloudOrnithologue(){
         List<Ornithologue> ornithos = getAllOrnithos();
         for (Ornithologue p : ornithos) {
-            com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue Ornithologue = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
-            Ornithologue.setId( (long) p.getId());
-            Ornithologue.setUsername(p.getUsername());
-            Ornithologue.setPassword(p.getPassword());
-            Ornithologue.setAge(p.getAge());
-            Ornithologue.setCanton(p.getCanton());
+            if(p.getId() > EndpointsAsyncTaskOrnitho.lastid){
 
-            new EndpointsAsyncTaskOrnitho(Ornithologue, dbHelper).execute();
+                Log.d("ID ADD "+ p.getId(), "ID LAST " + EndpointsAsyncTaskOrnitho.lastid );
+
+                com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue Ornithologue = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
+                Ornithologue.setId( (long) p.getId());
+                Ornithologue.setUsername(p.getUsername());
+                Ornithologue.setPassword(p.getPassword());
+                Ornithologue.setAge(p.getAge());
+                Ornithologue.setCanton(p.getCanton());
+                new EndpointsAsyncTaskOrnitho(Ornithologue, dbHelper).execute();
+
+            }
+
+
         }
         Log.e("debugCloud","all Ornithologue data saved");
     }

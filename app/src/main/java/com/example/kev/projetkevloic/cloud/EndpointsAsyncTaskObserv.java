@@ -34,6 +34,9 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     private Observation observation;
     private DatabaseHelper db;
     private Login login = null;
+    public static long lastid;
+    public static int temp;
+
 
 
     public EndpointsAsyncTaskObserv() {
@@ -51,6 +54,7 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
 
     @Override
     protected List<Observation> doInBackground(Void... params) {
+        temp = 0;
         if (observationApi == null) {  // Only do this once
             ObservationApi.Builder builder = new ObservationApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -75,8 +79,11 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
             // Call here the wished methods on the Endpoints
             // For instance insert
             if(observation != null){
-                observationApi.insert(observation).execute();
-                Log.i(TAG, "insert actor");
+                if(observation.getId()>lastid){
+                    observationApi.insert(observation).execute();
+                    Log.i(TAG, "insert observation");
+                }
+
             }
             // and for instance return the list of all employees
             return observationApi.list().execute().getItems();
@@ -93,16 +100,40 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
         Log.d("ON VERA", "INTOC ecutendoipintstaskornitho11");
 
         if(observations != null) {
-            for (Observation s:observations) {
+            if(Login.bDB.test == 0){
+                for (Observation s:observations) {
 
-                Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
+                    long id = s.getId();
 
-                long idOi =  s.getOiseau();
-                long idOr = s.getOrni();
-                String text = s.getText();
+                    long idOi =  s.getOiseau();
+                    long idOr = s.getOrni();
+                    String text = s.getText();
 
-                Login.bDB.createObservation((int) idOi, (int) idOr, text);
+                    Login.bDB.createObservation((int) idOi, (int) idOr, text);
+                }
+
+                Login.bDB.test = 1;
             }
+            else{
+                for (Observation s:observations) {
+                    long id = s.getId();
+                    lastid = id;
+                    Log.d("afsdf","fafsd");
+                }
+
+                for (Observation s:observations) {
+                    long id = s.getId();
+                    long idOi =  s.getOiseau();
+                    long idOr = s.getOrni();
+                    String text = s.getText();
+
+                    if(id > lastid){
+                        Login.bDB.createObservation((int) id, (int) idOi, (int) idOr, text);
+                    }
+            }
+
+            }
+
         }
     }
 

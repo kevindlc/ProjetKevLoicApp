@@ -23,6 +23,8 @@ public class ObserverDB {
 
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
+    public int test = 0;
+
 
     private String[] allColumns = {
             DatabaseHelper.OBSERVATION_ID,
@@ -65,6 +67,22 @@ public class ObserverDB {
 
         ContentValues values = new ContentValues();
 
+        values.put(DatabaseHelper.OBSERVATION_OISEAU, idOiseau);
+        values.put(DatabaseHelper.OBSERVATION_ORNITHO, idOrnitho);
+        values.put(DatabaseHelper.OBSERVATION_TEXT, text);
+
+
+        database.insert(DatabaseHelper.TABLE_OBSERVATION, null, values);
+
+        close();
+    }
+
+    public void createObservation(int id, int idOiseau, int idOrnitho, String text){
+
+        open();
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.OBSERVATION_ID, id);
         values.put(DatabaseHelper.OBSERVATION_OISEAU, idOiseau);
         values.put(DatabaseHelper.OBSERVATION_ORNITHO, idOrnitho);
         values.put(DatabaseHelper.OBSERVATION_TEXT, text);
@@ -186,7 +204,7 @@ public class ObserverDB {
             cursor.moveToFirst();
         }
 
-        String name = cursor.getString(1);
+        String name = cursor.getString(2);
 
         close();
         return name;
@@ -197,14 +215,19 @@ public class ObserverDB {
     public void sqlToCloudObservation(){
         List<Observation> observs = getAllObservations();
         for (Observation p : observs) {
-            com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
-            Observation.setId( (long) p.getId());
-            Observation.setOrni((long) p.getOrni());
-            Observation.setOiseau( (long) p.getOiseau());
-            Observation.setText(p.getText());
+            if(p.getId() > EndpointsAsyncTaskObserv.lastid) {
+
+                Log.d("ID ADD "+ p.getId(), "ID LAST " + EndpointsAsyncTaskObserv.lastid );
+
+                com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
+                Observation.setId((long) p.getId());
+                Observation.setOrni((long) p.getOrni());
+                Observation.setOiseau((long) p.getOiseau());
+                Observation.setText(p.getText());
 
 
-            new EndpointsAsyncTaskObserv(Observation, dbHelper).execute();
+                new EndpointsAsyncTaskObserv(Observation, dbHelper).execute();
+            }
         }
         Log.e("debugCloud","all Observation data saved");
     }

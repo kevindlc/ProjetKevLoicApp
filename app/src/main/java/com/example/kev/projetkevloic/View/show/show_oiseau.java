@@ -42,6 +42,7 @@ public class show_oiseau extends AppCompatActivity {
         int id_ = intent.getIntExtra("ID",0);
         ID_USER  = intent.getIntExtra("ID_USER", 0);
         Log.d("ID_USERR : " , ID_USER+"");
+        Log.d("ID:OISE",id_+"");
 
         // check if the user is the admin, if yes we can edit
         if(ID_USER != 1){

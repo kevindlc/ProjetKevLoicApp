@@ -27,6 +27,7 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
     private Ornithologue ornithologue;
     private DatabaseHelper db;
     public Login login = null;
+    public static long lastid;
 
 
     public EndpointsAsyncTaskOrnitho() {
@@ -91,17 +92,21 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
 
                 Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
 
+                long id = s.getId();
+                lastid = id;
                 String username = s.getUsername();
                 String password = s.getPassword();
                 String age = s.getAge();
                 String canton = s.getCanton();
 
-                Login.rDB.createOrnitho(username, password, age , canton);
+                Login.rDB.createOrnitho(id, username, password, age , canton);
             }
         }
 
 
     }
+
+
 
 
 }
