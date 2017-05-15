@@ -109,7 +109,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
     // delete all the tables
     public void deleteTable(SQLiteDatabase db){
         db.delete(TABLE_OISEAU,null,null);
