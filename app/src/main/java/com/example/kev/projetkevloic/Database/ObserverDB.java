@@ -122,6 +122,7 @@ public class ObserverDB {
                 int idOiseau = Integer.parseInt(cursor.getString(2));
                 String idO = getNameOiseau(idOiseau);
                 o.setOiseauN(idO);
+                Log.d("icccc",cursor.getString(3));
                 o.setOrniN(getNameOrnitho(Integer.parseInt(cursor.getString(3))));
 
                 observations.add(o);
@@ -198,13 +199,23 @@ public class ObserverDB {
     public String getNameOrnitho(int id){
         Log.d("----", id+"");
         open();
+
         Cursor cursor = database.query(DatabaseHelper.TABLE_ORNITHO, allColumnsOrnitho , DatabaseHelper.ORNITHO_ID + "=?",
                 new String[]{String.valueOf(id)},null,null,null,null);
         if(cursor != null)  {
             cursor.moveToFirst();
         }
 
-        String name = cursor.getString(2);
+        Log.d("1",cursor.getString(1) );
+        Log.d("2",cursor.getString(2) );
+        Log.d("3",cursor.getString(3) );
+        Log.d("4",cursor.getString(4) );
+        Log.d("5",cursor.getString(5) );
+
+
+
+
+        String name = cursor.getString(3);
 
         close();
         return name;
@@ -230,6 +241,25 @@ public class ObserverDB {
             }
         }
         Log.e("debugCloud","all Observation data saved");
+    }
+
+    public void sqlToCloudObservationEdit(int id){
+
+
+                Observation  p = new Observation();
+                p = getObservation(id);
+
+                com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
+                Observation.setId((long) p.getId());
+                Observation.setOrni((long) p.getOrni());
+                Observation.setOiseau((long) p.getOiseau());
+                Observation.setText(p.getText());
+
+        Log.d("modif ok","ok");
+
+                new EndpointsAsyncTaskObserv(Observation, dbHelper).execute();
+
+        Log.e("editCloud","this Observation data saved" + id);
     }
 
     public void cloudToSqlObservation(List<com.example.kev.myapplication.backend.observationApi.model.Observation> observs){

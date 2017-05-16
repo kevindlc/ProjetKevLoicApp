@@ -63,6 +63,8 @@ public class edit_observ extends AppCompatActivity {
                 o.setText(txtText.getText().toString());
 
                 bDB.updateObservation(o);
+                bDB.sqlToCloudObservationEdit(id);
+
 
                 Intent intent = new Intent(edit_observ.this , HomeObservations.class);
                 finish();
