@@ -122,8 +122,11 @@ public class ObserverDB {
                 int idOiseau = Integer.parseInt(cursor.getString(2));
                 String idO = getNameOiseau(idOiseau);
                 o.setOiseauN(idO);
-                Log.d("icccc",cursor.getString(3));
-                o.setOrniN(getNameOrnitho(Integer.parseInt(cursor.getString(3))));
+
+                int idOrni = Integer.parseInt(cursor.getString(3));
+                Log.d(idOrni+"", "ICI");
+                String idOr= getNameOrnitho(idOrni);
+                o.setOrniN(idOr);
 
                 observations.add(o);
 
@@ -180,7 +183,7 @@ public class ObserverDB {
     }
 
     // retourn le nom d'un oiseau par rapport à son ID
-    public String getNameOiseau(int id){
+    public String getNameOiseau(long id){
         open();
         Cursor cursor = database.query(DatabaseHelper.TABLE_OISEAU, allColumnsOiseau , DatabaseHelper.OISEAU_ID + "=?",
                 new String[]{String.valueOf(id)},null,null,null,null);
@@ -188,7 +191,7 @@ public class ObserverDB {
             cursor.moveToFirst();
         }
 
-        String name = cursor.getString(1);
+        String name = cursor.getString(2);
 
         close();
         return name;
@@ -196,29 +199,19 @@ public class ObserverDB {
     }
 
     // retourne le nom d'un ornitho par rapport à son ID
-    public String getNameOrnitho(int id){
-        Log.d("----", id+"");
+    public String getNameOrnitho(long id){
         open();
-
         Cursor cursor = database.query(DatabaseHelper.TABLE_ORNITHO, allColumnsOrnitho , DatabaseHelper.ORNITHO_ID + "=?",
                 new String[]{String.valueOf(id)},null,null,null,null);
         if(cursor != null)  {
             cursor.moveToFirst();
+            Log.d(cursor.toString(),"-");
         }
 
-        Log.d("1",cursor.getString(1) );
-        Log.d("2",cursor.getString(2) );
-        Log.d("3",cursor.getString(3) );
-        Log.d("4",cursor.getString(4) );
-        Log.d("5",cursor.getString(5) );
 
-
-
-
-        String name = cursor.getString(3);
 
         close();
-        return name;
+        return "sa";
 
     }
 
@@ -243,11 +236,8 @@ public class ObserverDB {
         Log.e("debugCloud","all Observation data saved");
     }
 
-    public void sqlToCloudObservationEdit(int id){
+    public void sqlToCloudObservationEdit(Observation p){
 
-
-                Observation  p = new Observation();
-                p = getObservation(id);
 
                 com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
                 Observation.setId((long) p.getId());
@@ -255,11 +245,10 @@ public class ObserverDB {
                 Observation.setOiseau((long) p.getOiseau());
                 Observation.setText(p.getText());
 
-        Log.d("modif ok","ok");
+        Log.d(p.getText(), "ici");
 
                 new EndpointsAsyncTaskObserv(Observation, dbHelper).execute();
 
-        Log.e("editCloud","this Observation data saved" + id);
     }
 
     public void cloudToSqlObservation(List<com.example.kev.myapplication.backend.observationApi.model.Observation> observs){

@@ -118,7 +118,6 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
                 for (Observation s:observations) {
                     long id = s.getId();
                     lastid = id;
-                    Log.d("afsdf","fafsd");
                 }
 
                 for (Observation s:observations) {
