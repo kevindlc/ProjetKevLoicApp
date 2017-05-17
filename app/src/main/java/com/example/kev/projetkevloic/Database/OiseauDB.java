@@ -11,6 +11,7 @@ package com.example.kev.projetkevloic.Database;
         import android.database.sqlite.SQLiteDatabase;
         import android.util.Log;
 
+        import com.example.kev.projetkevloic.object.Observation;
         import com.example.kev.projetkevloic.object.Oiseau;
         import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOiseau;
 
@@ -70,6 +71,7 @@ public class OiseauDB {
         long id = o.getId();
         open();
         database.delete(DatabaseHelper.TABLE_OISEAU, DatabaseHelper.OISEAU_ID + " = " + id , null);
+
         close();
     }
 
@@ -243,6 +245,21 @@ public class OiseauDB {
         Log.e("debugCloud","all Oiseau data saved");
     }
 
+    public void sqlToCloudOiseauEdit(Oiseau o){
+
+                com.example.kev.myapplication.backend.oiseauApi.model.Oiseau Oiseau = new com.example.kev.myapplication.backend.oiseauApi.model.Oiseau();
+                Oiseau.setId((long) o.getId());
+                Oiseau.setNom(o.getNom());
+                Oiseau.setColor(o.getColor());
+                Oiseau.setPoids(o.getPoids());
+                Oiseau.setTaille(o.getTaille());
+                Oiseau.setText(o.getText());
+
+                new EndpointsAsyncTaskOiseau(1,Oiseau, dbHelper).execute();
+            }
+
+
+
     public void cloudToSqlOiseau(List<com.example.kev.myapplication.backend.oiseauApi.model.Oiseau> items){
         SQLiteDatabase sqldbHelper = dbHelper.getReadableDatabase();
         sqldbHelper.delete(dbHelper.TABLE_OISEAU, null, null);
@@ -262,25 +279,7 @@ public class OiseauDB {
         Log.e("debugCloud","all Oiseau data got");
     }
 
-    public void cloudToSqlOiseauID(List<com.example.kev.myapplication.backend.oiseauApi.model.Oiseau> items){
-        SQLiteDatabase sqldbHelper = dbHelper.getReadableDatabase();
-        sqldbHelper.delete(dbHelper.TABLE_OISEAU, null, null);
 
-
-        for (com.example.kev.myapplication.backend.oiseauApi.model.Oiseau o : items) {
-            ContentValues values = new ContentValues();
-            values.put(dbHelper.OISEAU_ID, (long) o.getId());
-            values.put(dbHelper.OISEAU_COLOR,o.getColor());
-            values.put(dbHelper.OISEAU_NAME, o.getNom());
-            values.put(dbHelper.OISEAU_POIDS, o.getPoids());
-            values.put(dbHelper.OISEAU_TEXT, o.getText());
-
-
-            sqldbHelper.insert(dbHelper.TABLE_OISEAU ,null, values);
-        }
-        sqldbHelper.close();
-        Log.e("debugCloud","all Oiseau data got");
-    }
 
 
 }

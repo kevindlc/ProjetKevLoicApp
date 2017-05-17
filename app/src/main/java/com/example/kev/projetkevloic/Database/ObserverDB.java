@@ -100,6 +100,18 @@ public class ObserverDB {
         close();
     }
 
+    public void deleteObservationOrni(int o){
+        open();
+        database.delete(DatabaseHelper.TABLE_OBSERVATION, DatabaseHelper.OBSERVATION_ORNITHO + " = " + o , null);
+        close();
+    }
+
+    public void deleteObservationOis(int o){
+        open();
+        database.delete(DatabaseHelper.TABLE_OBSERVATION, DatabaseHelper.OBSERVATION_OISEAU + " = " + o , null);
+        close();
+    }
+
     // retourne une liste de toutes les observations
     public List<Observation> getAllObservations(){
 
@@ -238,18 +250,16 @@ public class ObserverDB {
 
     public void sqlToCloudObservationEdit(Observation p){
 
-
                 com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
                 Observation.setId((long) p.getId());
                 Observation.setOrni((long) p.getOrni());
                 Observation.setOiseau((long) p.getOiseau());
                 Observation.setText(p.getText());
 
-        Log.d(p.getText(), "ici");
-
-                new EndpointsAsyncTaskObserv(Observation, dbHelper).execute();
+                new EndpointsAsyncTaskObserv(1,Observation, dbHelper).execute();
 
     }
+
 
     public void cloudToSqlObservation(List<com.example.kev.myapplication.backend.observationApi.model.Observation> observs){
         SQLiteDatabase sqlDB = dbHelper.getReadableDatabase();
@@ -271,5 +281,38 @@ public class ObserverDB {
         Log.e("debugCloud","all Observation data got");
     }
 
+    public void deleteObservationOiseau(int i) {
+        List<Observation> observs = getAllObservations();
+        for (Observation p : observs) {
+            if(p.getOiseau() == i) {
+
+                database.delete(DatabaseHelper.TABLE_OBSERVATION, DatabaseHelper.OBSERVATION_ID + " = " + p.getId() , null);
+
+            }
+        }
+    }
+
+    public void deleteObservationsOISEAU(int ID){
+
+        open();
+
+        List<Observation> observations = new ArrayList<Observation>();
+
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OBSERVATION;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                if(Integer.parseInt(cursor.getString(2)) == ID){
+                    deleteObservation(Integer.parseInt(cursor.getString(0)));
+                }
+
+
+            }while (cursor.moveToNext());
+        }
+
+        close();
+    }
 }
 

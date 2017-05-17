@@ -75,6 +75,8 @@ public class OrnithoDB {
     public void deleteOrnitho(int o) {
         open();
         database.delete(DatabaseHelper.TABLE_ORNITHO, DatabaseHelper.ORNITHO_ID + " = " + o, null);
+        database.delete(DatabaseHelper.TABLE_OBSERVATION, DatabaseHelper.OBSERVATION_ORNITHO + " = " + o , null);
+
         close();
     }
 
@@ -176,6 +178,7 @@ public class OrnithoDB {
             id=cursor.getInt(0);
             cursor.close();
         }
+        close();
         return id;
     }
 
@@ -201,24 +204,18 @@ public class OrnithoDB {
         Log.e("debugCloud","all Ornithologue data saved");
     }
 
-    public void cloudToSqlOrnithologue(List<com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue> ornithos){
-        SQLiteDatabase sqlDB = dbHelper.getReadableDatabase();
-        sqlDB.delete(dbHelper.TABLE_ORNITHO, null, null);
-
-        for (com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue p : ornithos) {
-            ContentValues values = new ContentValues();
-            values.put(dbHelper.ORNITHO_ID, (long) p.getId());
-            values.put(dbHelper.ORNITHO_USERNAME, p.getUsername());
-            values.put(dbHelper.ORNITHO_PASSWORD, p.getPassword());
-            values.put(dbHelper.ORNITHO_AGE, p.getAge());
-            values.put(dbHelper.ORNITHO_CANTON, p.getCanton());
 
 
+    public void cloudToSqlOrnithologueEdit(Ornithologue p){
 
-            sqlDB.insert(dbHelper.TABLE_ORNITHO, null, values);
-        }
-        sqlDB.close();
-        Log.e("debugCloud","all Ornithologue data got");
+        com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue orni = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
+        orni.setId((long) p.getId());
+        orni.setCanton( p.getCanton());
+        orni.setAge( p.getAge());
+        orni.setUsername(p.getUsername());
+        orni.setPassword(p.getPassword());
+
+        new EndpointsAsyncTaskOrnitho(orni, dbHelper).execute();
     }
 
 

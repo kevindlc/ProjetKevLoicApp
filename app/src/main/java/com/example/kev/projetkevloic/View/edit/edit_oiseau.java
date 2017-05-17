@@ -63,12 +63,14 @@ public class edit_oiseau extends AppCompatActivity {
 
                 // update the birds
                 oDB.updateOiseau(o);
+                oDB.sqlToCloudOiseauEdit(o);
 
+                finish();
 
                 // change the view
                 Intent intent = new Intent(edit_oiseau.this , HomeOiseaux.class);
-                finish();
                 intent.putExtra("ID_USER" , ID_USER);
+
 
                 startActivity(intent);
             }
@@ -136,10 +138,11 @@ public class edit_oiseau extends AppCompatActivity {
     }
 
     public void Retour (View view) {
+        finish();
+
         Intent intent = new Intent(edit_oiseau.this, HomeOiseaux.class);
         intent.putExtra("ID_USER" , ID_USER);
 
-        finish();
         startActivity(intent);
     }
 

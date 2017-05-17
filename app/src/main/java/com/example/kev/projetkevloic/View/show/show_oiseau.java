@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.kev.projetkevloic.Database.ObserverDB;
 import com.example.kev.projetkevloic.Database.OiseauDB;
 import com.example.kev.projetkevloic.R;
 import com.example.kev.projetkevloic.View.edit.edit_oiseau;
@@ -24,6 +25,7 @@ public class show_oiseau extends AppCompatActivity {
     OiseauDB oDB ;
     private String idf; // permet de resortir l'ID de l'oiseau
     private int ID_USER ;
+    private ObserverDB bDB = new ObserverDB(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,7 @@ public class show_oiseau extends AppCompatActivity {
                     int ID = Integer.parseInt(idf);
                     oDB = new OiseauDB(this);
                     oDB.deleteOiseau(ID);
+                    bDB.deleteObservationsOISEAU(Integer.parseInt(getIdf()));
                     intent.putExtra("ID_USER", ID_USER);
                     this.startActivity(intent);
 

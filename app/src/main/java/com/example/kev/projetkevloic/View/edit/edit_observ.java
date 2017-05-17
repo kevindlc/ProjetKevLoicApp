@@ -64,10 +64,10 @@ public class edit_observ extends AppCompatActivity {
 
                 bDB.updateObservation(o);
                 bDB.sqlToCloudObservationEdit(o);
+                finish();
 
 
                 Intent intent = new Intent(edit_observ.this , HomeObservations.class);
-                finish();
                 intent.putExtra("ID_USER" , ID_USER);
 
                 startActivity(intent);

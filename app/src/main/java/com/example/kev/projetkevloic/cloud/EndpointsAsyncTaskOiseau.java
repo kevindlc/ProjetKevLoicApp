@@ -29,6 +29,8 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     private DatabaseHelper db;
     private Login login = null;
     public static long lastid;
+    private int temp;
+
 
 
     public EndpointsAsyncTaskOiseau() {
@@ -37,11 +39,19 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     public EndpointsAsyncTaskOiseau(DatabaseHelper db, Login login) {
         this.db = db;
         this.login = login;
+        temp = 0;
     }
 
     public EndpointsAsyncTaskOiseau(Oiseau oiseau, DatabaseHelper db) {
         this.oiseau = oiseau;
         this.db = db;
+        temp = 0;
+    }
+
+    public EndpointsAsyncTaskOiseau(int temp, Oiseau oiseau, DatabaseHelper db) {
+        this.oiseau = oiseau;
+        this.db = db;
+        this.temp = temp;
     }
 
     @Override
@@ -86,23 +96,26 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     protected void onPostExecute(List<Oiseau> oiseaux) {
         Log.d("ON VERA", "INTOC ecutendoipintstaskobiseau11");
 
-        if(oiseaux != null) {
-            for (Oiseau s: oiseaux) {
+        if(temp == 0){
+            if(oiseaux != null) {
+                for (Oiseau s: oiseaux) {
 
-                Log.d("ON VERA", "INTOC ecutendoipintstaskooiseau222");
+                    Log.d("ON VERA", "INTOC ecutendoipintstaskooiseau222");
 
-                long id = s.getId();
-                lastid = id;
+                    long id = s.getId();
+                    lastid = id;
 
-                String nom = s.getNom();
-                String color = s.getColor();
-                String poids = s.getPoids();
-                String taille = s.getTaille();
-                String text = s.getText();
+                    String nom = s.getNom();
+                    String color = s.getColor();
+                    String poids = s.getPoids();
+                    String taille = s.getTaille();
+                    String text = s.getText();
 
-                Login.oDB.createOiseau(nom, color, taille, poids , text);
+                    Login.oDB.createOiseau(nom, color, taille, poids , text);
 
-            }
+                }
+        }
+
         }
     }
 

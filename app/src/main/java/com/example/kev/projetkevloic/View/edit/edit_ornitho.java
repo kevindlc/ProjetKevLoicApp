@@ -60,6 +60,7 @@ public class edit_ornitho extends AppCompatActivity {
 
                 // update the ornitho into the db
                 rDB.updateOrnitho(o);
+                rDB.cloudToSqlOrnithologueEdit(o);
 
                 // move to the homeOrnitho view
                 Intent intent = new Intent(edit_ornitho.this , HomeOrnithologue.class);

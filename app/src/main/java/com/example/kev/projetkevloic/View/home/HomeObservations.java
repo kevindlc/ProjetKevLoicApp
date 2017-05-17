@@ -72,7 +72,12 @@ public class HomeObservations extends AppCompatActivity {
     }
 
     public void Retour(View view) {
+
+        Intent intent = new Intent(HomeObservations.this, MainActivity.class);
+        intent.putExtra("ID_USER", ID_USER);
+
         finish();
+        startActivity(intent);
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.R;
 import com.example.kev.projetkevloic.View.home.HomeObservations;
 import com.example.kev.projetkevloic.View.home.HomeOiseaux;
+import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskObserv;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,9 @@ public class addObserv extends AppCompatActivity {
 
                 Ttext = (EditText)   findViewById(R.id.editText2);
 
+
                 bDB.createObservation(oDB.getIdByName(oiseau),ID_USER,Ttext.getText().toString());
+                
 
                 Intent intent = new Intent(addObserv.this , HomeObservations.class);
                 intent.putExtra("ID_USER" , ID_USER);

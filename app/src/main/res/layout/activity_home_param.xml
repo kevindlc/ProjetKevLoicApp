@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.kev.projetkevloic.activity.activity_home_param">
 
-<ImageView
+
+
+    <ImageView
     android:layout_width="49dp"
     android:layout_height="33dp"
     android:src="@drawable/ic_all"
@@ -96,12 +98,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/mybutton"
-        android:text="PULL"
-        android:onClick="cloud"
+        android:text="TO CLOUD"
+        android:onClick="sqltocloud"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="322dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="60dp" />
+
+
+    <Button
+        android:id="@+id/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="322dp"
+        android:background="@drawable/mybutton"
+        android:onClick="cloudtosql"
+        android:text="FROM CLOUD"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

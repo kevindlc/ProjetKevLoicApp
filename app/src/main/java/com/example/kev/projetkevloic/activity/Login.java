@@ -109,9 +109,10 @@ public class Login extends AppCompatActivity {
         db.resetDatabase();
         Log.d("ON VERA", "INTOC CLOUDTOSQL");
 
-        new EndpointsAsyncTaskObserv().execute();
         new EndpointsAsyncTaskOiseau().execute();
         new EndpointsAsyncTaskOrnitho().execute();
+        new EndpointsAsyncTaskObserv().execute();
+
     }
 
 

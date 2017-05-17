@@ -78,9 +78,18 @@ public class HomeParam extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void cloud(View v) {
+    public void sqltocloud(View v) {
 
         Login.sqliteToCloud();
+
+        Intent intent = new Intent(HomeParam.this, MainActivity.class);
+        intent.putExtra("ID_USER", ID_USER);
+        startActivity(intent);
+    }
+
+    public void cloudtosql(View v) {
+
+        Login.cloudToSQL();
 
         Intent intent = new Intent(HomeParam.this, MainActivity.class);
         intent.putExtra("ID_USER", ID_USER);
