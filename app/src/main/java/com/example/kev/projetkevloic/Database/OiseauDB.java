@@ -66,6 +66,25 @@ public class OiseauDB {
         close();
     }
 
+    public void createOiseau(long id, String nom, String color, String poids, String taille, String text){
+
+        open();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DatabaseHelper.OISEAU_ID, id);
+        values.put(DatabaseHelper.OISEAU_NAME, nom);
+        values.put(DatabaseHelper.OISEAU_COLOR, color);
+        values.put(DatabaseHelper.OISEAU_POIDS, poids);
+        values.put(DatabaseHelper.OISEAU_TEXT , text);
+        values.put(DatabaseHelper.OISEAU_TAILLE, taille);
+
+
+        database.insert(DatabaseHelper.TABLE_OISEAU, null, values);
+
+        close();
+    }
+
     // delete the bird
     public void deleteOiseau(Oiseau o){
         long id = o.getId();
@@ -80,6 +99,8 @@ public class OiseauDB {
         open();
         Log.d("---", o+"");
         database.delete(DatabaseHelper.TABLE_OISEAU, DatabaseHelper.OISEAU_ID + " = " + o , null);
+        new EndpointsAsyncTaskOiseau(2,o, dbHelper).execute();
+
         close();
     }
 

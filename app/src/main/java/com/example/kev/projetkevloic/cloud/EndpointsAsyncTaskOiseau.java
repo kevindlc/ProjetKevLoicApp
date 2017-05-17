@@ -30,6 +30,7 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     private Login login = null;
     public static long lastid;
     private int temp;
+    private long idOiseau=0;
 
 
 
@@ -52,7 +53,17 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
         this.oiseau = oiseau;
         this.db = db;
         this.temp = temp;
+
     }
+
+    public EndpointsAsyncTaskOiseau(int temp, int  idOiseau, DatabaseHelper db) {
+        this.oiseau = oiseau;
+        this.db = db;
+        this.temp = temp;
+        this.idOiseau = idOiseau;
+
+    }
+
 
     @Override
     protected List<Oiseau> doInBackground(Void... params) {
@@ -72,6 +83,14 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
             // end options for devappserver
 
             oiseauApi = builder.build();
+        }
+        if(temp == 2){
+            try {
+                oiseauApi.remove(idOiseau).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         try{
@@ -111,7 +130,7 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
                     String taille = s.getTaille();
                     String text = s.getText();
 
-                    Login.oDB.createOiseau(nom, color, taille, poids , text);
+                    Login.oDB.createOiseau(id,nom, color, taille, poids , text);
 
                 }
         }
