@@ -9,13 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.kev.projetkevloic.Database.DatabaseHelper;
 import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.R;
-import com.example.kev.projetkevloic.View.edit.edit_ornitho;
-import com.example.kev.projetkevloic.View.home.HomeOrnithologue;
 import com.example.kev.projetkevloic.activity.Login;
-import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOrnitho;
 import com.example.kev.projetkevloic.object.Ornithologue;
 
 import java.util.ArrayList;
@@ -68,23 +64,14 @@ public class addOrni extends AppCompatActivity {
                 or1.setUsername(tusername.getText().toString());
                 or1.setPassword(tpassword.getText().toString());
                 or1.setCanton(canton);
-                or1.setId(rDB.getLastId());
+                or1.setId(rDB.getLastIdFree());
+
+
                 rDB.cloudToSqlOrnithologueEdit(or1);
-
-                com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue or = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
-                or.setAge(tage.getText().toString());
-                or.setUsername(tusername.getText().toString());
-                or.setPassword(tpassword.getText().toString());
-                or.setCanton(canton);
-
                 rDB.createOrnitho(tusername.getText().toString(),
                         tpassword.getText().toString() ,
                         tage.getText().toString(),
                         canton);
-
-
-
-
 
                 Intent intent = new Intent(addOrni.this , Login.class);
                 intent.putExtra("ID_USER" , ID_USER);

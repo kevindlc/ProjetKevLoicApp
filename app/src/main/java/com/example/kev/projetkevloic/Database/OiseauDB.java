@@ -85,14 +85,12 @@ public class OiseauDB {
         close();
     }
 
-    // delete the bird
+    // delete the bird in the sqlite db and the cloud
     public void deleteOiseau(Oiseau o){
         long id = o.getId();
         open();
         database.delete(DatabaseHelper.TABLE_OISEAU, DatabaseHelper.OISEAU_ID + " = " + id , null);
         new EndpointsAsyncTaskOiseau(2,(int)id, dbHelper).execute();
-
-
         close();
     }
 
@@ -108,13 +106,10 @@ public class OiseauDB {
 
     // create a List of all the birds
     public List<Oiseau> getAllOiseaux(){
-
         open();
 
         List<Oiseau> oiseaux = new ArrayList<Oiseau>();
-
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OISEAU;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if(cursor.moveToFirst()) {
@@ -135,13 +130,12 @@ public class OiseauDB {
         return oiseaux;
     }
 
-    public int getLastID(){
 
+    public int getLastIdFree(){
         open();
 
         int lastid =0;
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OISEAU;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if(cursor.moveToFirst()) {
@@ -162,7 +156,6 @@ public class OiseauDB {
         open();
 
         Cursor cursor = database.rawQuery(countQuery, null);
-
         cursor.close();
         close();
 
@@ -179,9 +172,6 @@ public class OiseauDB {
         values.put(DatabaseHelper.OISEAU_TAILLE, oiseau.getTaille());
         values.put(DatabaseHelper.OISEAU_TEXT, oiseau.getText());
 
-
-
-        Log.d("-------","ON VERRA");
          database.update(DatabaseHelper.TABLE_OISEAU, values, DatabaseHelper.OISEAU_ID + "=?" ,
                 new String[]{String.valueOf(oiseau.getId())});
 
@@ -206,13 +196,10 @@ public class OiseauDB {
 
     // create a List of the name of birds
     public ArrayList<String> getAllOiseauxName(){
-
         open();
 
         ArrayList<String> nameOiseaux = new ArrayList<String>();
-
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OISEAU;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if(cursor.moveToFirst()) {
@@ -230,7 +217,6 @@ public class OiseauDB {
         open();
 
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OISEAU;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         int ret = -1;
@@ -239,7 +225,6 @@ public class OiseauDB {
                 if(cursor.getString(1).equals(name)){
                     ret = Integer.parseInt(cursor.getString(0));
                 }
-
             }while (cursor.moveToNext());
         }
 
@@ -251,14 +236,11 @@ public class OiseauDB {
     // find the position of the color into the spinner
     public int findColor(String c) {
         Log.d(c,c);
-
         String[] colorss = new String[]{"inconnu", "rouge", "bleu", "vert", "jaune", "brun", "gris", "noir", "blanc"};
-
 
         int temp = 0;
         for (String i : colorss) {
             if (i.equals(c)) {
-                Log.d("OK","RECHECOK");
                 return temp;
             }
             temp++;
@@ -267,14 +249,13 @@ public class OiseauDB {
 
     }
 
+
+    //  import the sql lite db in the cloud
     public void sqlToCloudOiseau(){
         List<Oiseau> people = getAllOiseaux();
 
         for (Oiseau o : people) {
             if(o.getId() > EndpointsAsyncTaskOiseau.lastid) {
-
-                Log.d("ID ADD "+ o.getId(), "ID LAST " + EndpointsAsyncTaskOiseau.lastid );
-
                 com.example.kev.myapplication.backend.oiseauApi.model.Oiseau Oiseau = new com.example.kev.myapplication.backend.oiseauApi.model.Oiseau();
                 Oiseau.setId((long) o.getId());
                 Oiseau.setNom(o.getNom());
@@ -286,9 +267,9 @@ public class OiseauDB {
                 new EndpointsAsyncTaskOiseau(Oiseau, dbHelper).execute();
             }
         }
-        Log.e("debugCloud","all Oiseau data saved");
     }
 
+    // edit an bird in the cloud
     public void sqlToCloudOiseauEdit(Oiseau o){
 
                 com.example.kev.myapplication.backend.oiseauApi.model.Oiseau Oiseau = new com.example.kev.myapplication.backend.oiseauApi.model.Oiseau();
@@ -304,11 +285,12 @@ public class OiseauDB {
 
 
 
-    public void cloudToSqlOiseau(List<com.example.kev.myapplication.backend.oiseauApi.model.Oiseau> items){
+            // we  import the data from the cloud
+    public void cloudToSqlOiseau(List<com.example.kev.myapplication.backend.oiseauApi.model.Oiseau> oiseaux){
         SQLiteDatabase sqldbHelper = dbHelper.getReadableDatabase();
         sqldbHelper.delete(dbHelper.TABLE_OISEAU, null, null);
 
-        for (com.example.kev.myapplication.backend.oiseauApi.model.Oiseau o : items) {
+        for (com.example.kev.myapplication.backend.oiseauApi.model.Oiseau o : oiseaux) {
             ContentValues values = new ContentValues();
             values.put(dbHelper.OISEAU_ID, (long) o.getId());
             values.put(dbHelper.OISEAU_COLOR,o.getColor());
@@ -320,7 +302,7 @@ public class OiseauDB {
             sqldbHelper.insert(dbHelper.TABLE_OISEAU ,null, values);
         }
         sqldbHelper.close();
-        Log.e("debugCloud","all Oiseau data got");
+
     }
 
 

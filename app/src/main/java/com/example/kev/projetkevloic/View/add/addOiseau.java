@@ -1,16 +1,13 @@
 package com.example.kev.projetkevloic.View.add;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.kev.projetkevloic.Database.OiseauDB;
 import com.example.kev.projetkevloic.R;
@@ -24,10 +21,7 @@ public class addOiseau extends AppCompatActivity {
     Button bOK;
     OiseauDB oDB = new OiseauDB(this);
 
-
     private int ID_USER;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +65,7 @@ public class addOiseau extends AppCompatActivity {
 
                 oDB.createOiseau(tnom.getText().toString(), color,tpoids.getText().toString(), ttaille.getText().toString(), ttext.getText().toString() );
 
+
                 Oiseau os = new Oiseau();
 
                 os.setNom(tnom.getText().toString());
@@ -78,9 +73,7 @@ public class addOiseau extends AppCompatActivity {
                 os.setText(tpoids.getText().toString());
                 os.setPoids(tpoids.getText().toString());
                 os.setText(ttaille.getText().toString());
-                os.setId(oDB.getLastID());
-
-
+                os.setId(oDB.getLastIdFree());
 
                 oDB.sqlToCloudOiseauEdit(os);
 

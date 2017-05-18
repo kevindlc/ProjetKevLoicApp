@@ -35,12 +35,10 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     private DatabaseHelper db;
     private Login login = null;
     public static long lastid;
-    private int temp;
+    private int temp; // temp is use when we need to have some specifics methods
     private long id = 0;
 
-
     public EndpointsAsyncTaskObserv() {
-
     }
 
     public EndpointsAsyncTaskObserv(DatabaseHelper db, Login login) {
@@ -62,9 +60,10 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     }
 
     public EndpointsAsyncTaskObserv(int i) {
-
         this.temp = i;
     }
+
+
     public EndpointsAsyncTaskObserv(int i, int id, DatabaseHelper db) {
         this.db = db;
         this.temp = i;
@@ -94,6 +93,7 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
             observationApi = builder.build();
         }
 
+        // if we need to remove, the temp is 2
         if(temp == 2){
             try {
                 observationApi.remove(id).execute();
@@ -101,12 +101,6 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
                 e.printStackTrace();
             }
         }
-
-
-        if(temp == 3){
-            Log.d("fdafasd","fasdd");
-        }
-
 
         try {
             // Call here the wished methods on the Endpoints
@@ -131,18 +125,13 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
 
     @Override
     protected void onPostExecute(List<Observation> observations) {
-        Log.d("ON VERA", "INTOC ecutendoipintstask OBSERVER");
-
-
-
-
 
         if (temp == 0) {
+
             if (observations != null) {
+            // create the observation into the sqlitedatabase
                 for (Observation s : observations) {
-
                     long id = s.getId();
-
                     long idOi = s.getOiseau();
                     long idOr = s.getOrni();
                     String text = s.getText();
@@ -162,19 +151,14 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
                     long idOr = s.getOrni();
                     String text = s.getText();
 
+                    // create only if the id is higher than the lastid
                     if (id > lastid) {
                         Login.bDB.createObservation((int) id, (int) idOi, (int) idOr, text);
                     }
                 }
-
-
             }
-
-            }
-
-
         }
-
+        }
 
     }
 

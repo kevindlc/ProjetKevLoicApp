@@ -76,7 +76,7 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
             // For instance insert
             if(ornithologue != null){
                 ornithologueApi.insert(ornithologue).execute();
-                Log.i(TAG, "insert actor");
+                Log.i(TAG, "insert ornithologue");
             }
             // and for instance return the list of all employees
             return ornithologueApi.list().execute().getItems();
@@ -90,13 +90,9 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
     @Override
     protected void onPostExecute(List<Ornithologue> result) {
 
-        Log.d("ON VERA", "INTOC ecutendoipintstaskornitho11");
-
         if(temp!=1){
             if(result != null) {
                 for (Ornithologue s:result) {
-
-                    Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
 
                     long id = s.getId();
                     lastid = id;
@@ -109,12 +105,5 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
                 }
             }
         }
-
-
-
     }
-
-
-
-
 }

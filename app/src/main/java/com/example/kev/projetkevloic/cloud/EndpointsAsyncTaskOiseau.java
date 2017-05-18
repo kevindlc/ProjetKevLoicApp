@@ -83,6 +83,8 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
 
             oiseauApi = builder.build();
         }
+
+        // temp = 2 ==> we delete the bird
         if(temp == 2){
             try {
                 oiseauApi.remove(idOiseau).execute();
@@ -112,14 +114,10 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
 
     @Override
     protected void onPostExecute(List<Oiseau> oiseaux) {
-        Log.d("ON VERA", "INTOC ecutendoipintstaskobiseau11");
 
         if(temp == 0){
             if(oiseaux != null) {
                 for (Oiseau s: oiseaux) {
-
-                    Log.d("ON VERA", "INTOC ecutendoipintstaskooiseau222");
-
                     long id = s.getId();
                     lastid = id;
 
@@ -137,11 +135,9 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
                     Login.oDB.createOiseau(id,nom, color, taille, poids , text);
 
                 }
-        }
-
+            }
         }
     }
-
 
 }
 

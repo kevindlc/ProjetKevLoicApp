@@ -31,10 +31,6 @@ public class Login extends AppCompatActivity {
     public static OiseauDB oDB;
     public static DatabaseHelper db;
 
-
-
-
-    // SALUT C EST UN TEST
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -82,6 +78,7 @@ public class Login extends AppCompatActivity {
 
     }
 
+    //
     public void goLogin(View view) {
         finish();
         Intent intent = new Intent(Login.this, MainActivity.class);
@@ -94,21 +91,20 @@ public class Login extends AppCompatActivity {
 
     }
 
-
+// use to transfer the actually sqlite databse to the cloud
+    // we hace create one methode fo each tablle
     public static void sqliteToCloud() {
 
-        Log.d("sqlitcoulod","fasdf");
         oDB.sqlToCloudOiseau();
         rDB.sqlToCloudOrnithologue();
         bDB.sqlToCloudObservation();
 
     }
 
-
+    // we import the data from the cloud
+    // first we restart your sqlite database and then we import the data from the cloud
     public static void cloudToSQL( ) {
         db.resetDatabase();
-        Log.d("ON VERA", "INTOC CLOUDTOSQL");
-
         new EndpointsAsyncTaskOiseau().execute();
         new EndpointsAsyncTaskOrnitho().execute();
         new EndpointsAsyncTaskObserv().execute();

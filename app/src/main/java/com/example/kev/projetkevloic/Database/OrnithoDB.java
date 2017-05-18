@@ -85,11 +85,6 @@ public class OrnithoDB {
 
         database.insert(DatabaseHelper.TABLE_ORNITHO, null, values);
         new EndpointsAsyncTaskOrnitho(or,dbHelper ).execute();
-        Log.d("OK","OKKKK");
-
-
-
-
         close();
     }
 
@@ -108,7 +103,6 @@ public class OrnithoDB {
         List<Ornithologue> ornithologues = new ArrayList<Ornithologue>();
 
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_ORNITHO;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -128,20 +122,16 @@ public class OrnithoDB {
         return ornithologues;
     }
 
-    public int getLastId() {
+    public int getLastIdFree() {
         open();
-
-
         int lastid = 0;
 
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_ORNITHO;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
                 lastid = (Integer.parseInt(cursor.getString(0)));
-
             } while (cursor.moveToNext());
         }
 
@@ -170,7 +160,6 @@ public class OrnithoDB {
         values.put(DatabaseHelper.ORNITHO_PASSWORD, ornithologue.getPassword());
         values.put(DatabaseHelper.ORNITHO_AGE, ornithologue.getAge());
         values.put(DatabaseHelper.ORNITHO_CANTON, ornithologue.getCanton());
-
 
         database.update(DatabaseHelper.TABLE_ORNITHO, values, DatabaseHelper.ORNITHO_ID + "=?",
                 new String[]{String.valueOf(ornithologue.getId())});
@@ -224,13 +213,12 @@ public class OrnithoDB {
         return id;
     }
 
+    // we import the sqlite db to the cloud
     public void sqlToCloudOrnithologue(){
         List<Ornithologue> ornithos = getAllOrnithos();
         for (Ornithologue p : ornithos) {
+
             if(p.getId() > EndpointsAsyncTaskOrnitho.lastid){
-
-                Log.d("ID ADD "+ p.getId(), "ID LAST " + EndpointsAsyncTaskOrnitho.lastid );
-
                 com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue Ornithologue = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
                 Ornithologue.setId( (long) p.getId());
                 Ornithologue.setUsername(p.getUsername());
@@ -238,16 +226,11 @@ public class OrnithoDB {
                 Ornithologue.setAge(p.getAge());
                 Ornithologue.setCanton(p.getCanton());
                 new EndpointsAsyncTaskOrnitho(Ornithologue, dbHelper).execute();
-
             }
-
-
         }
-        Log.e("debugCloud","all Ornithologue data saved");
     }
 
-
-
+    // we export when we edit or add an ornithologue
     public void cloudToSqlOrnithologueEdit(Ornithologue p){
 
         com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue orni = new com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue();
@@ -259,6 +242,5 @@ public class OrnithoDB {
 
         new EndpointsAsyncTaskOrnitho(1,orni, dbHelper).execute();
     }
-
 
 }

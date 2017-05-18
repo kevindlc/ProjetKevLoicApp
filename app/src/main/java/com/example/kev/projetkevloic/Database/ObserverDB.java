@@ -112,6 +112,7 @@ public class ObserverDB {
         close();
     }
 
+
     public void deleteObservationOrni(int o){
         open();
         database.delete(DatabaseHelper.TABLE_OBSERVATION, DatabaseHelper.OBSERVATION_ORNITHO + " = " + o , null);
@@ -276,8 +277,6 @@ public class ObserverDB {
     // retourne le nom d'un ornitho par rapport à son ID
     public String getNameOrnitho(long id){
         String name = "" ;
-
-
         open();
 
         List<Ornithologue> oiss = new ArrayList<Ornithologue>();
@@ -295,35 +294,28 @@ public class ObserverDB {
 
             }while (cursor.moveToNext());
         }
-
         close();
-
-
         return name;
 
     }
 
-
+//  we export the data to the cloud
     public void sqlToCloudObservation(){
         List<Observation> observs = getAllObservations();
         for (Observation p : observs) {
             if(p.getId() > EndpointsAsyncTaskObserv.lastid) {
-
-                Log.d("ID ADD "+ p.getId(), "ID LAST " + EndpointsAsyncTaskObserv.lastid );
 
                 com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
                 Observation.setId((long) p.getId());
                 Observation.setOrni((long) p.getOrni());
                 Observation.setOiseau((long) p.getOiseau());
                 Observation.setText(p.getText());
-
-
                 new EndpointsAsyncTaskObserv(Observation, dbHelper).execute();
             }
         }
-        Log.e("debugCloud","all Observation data saved");
     }
 
+    // edit or add we an specific id
     public void sqlToCloudObservationEdit(Observation p){
 
                 com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
@@ -337,6 +329,7 @@ public class ObserverDB {
     }
 
 
+    // we import the data from the cloud
     public void cloudToSqlObservation(List<com.example.kev.myapplication.backend.observationApi.model.Observation> observs){
         SQLiteDatabase sqlDB = dbHelper.getReadableDatabase();
         sqlDB.delete(dbHelper.TABLE_OBSERVATION, null, null);
@@ -347,14 +340,9 @@ public class ObserverDB {
             values.put(dbHelper.OBSERVATION_ORNITHO, (long) p.getOrni());
             values.put(dbHelper.OBSERVATION_OISEAU, (long) p.getOiseau());
             values.put(dbHelper.OBSERVATION_TEXT, p.getText());
-
-
-
-
             sqlDB.insert(dbHelper.TABLE_OBSERVATION, null, values);
         }
         sqlDB.close();
-        Log.e("debugCloud","all Observation data got");
     }
 
     public void deleteObservationOiseau(int i) {
@@ -368,22 +356,20 @@ public class ObserverDB {
         }
     }
 
-    public void deleteObservationsOISEAU(int ID){
-
+    // when we delete an bird, we need to delete all the observations where the bird is the deleted bird
+    public void deleteObservationsOISEAU(int idDeleteBird){
         open();
 
         List<Observation> observations = new ArrayList<Observation>();
-
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OBSERVATION;
-
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if(cursor.moveToFirst()) {
             do {
-                if(Integer.parseInt(cursor.getString(2)) == ID){
+                // only if the idDeleteBird from the birds is the same in the delete bird
+                if(Integer.parseInt(cursor.getString(2)) == idDeleteBird){
                     deleteObservation(Integer.parseInt(cursor.getString(0)));
                 }
-
 
             }while (cursor.moveToNext());
         }
@@ -391,14 +377,17 @@ public class ObserverDB {
         close();
     }
 
+    // delete the observation in the cloud
     public void deleteCloudObservation(Observation p){
 
+        // transform the bird
         com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
         Observation.setId((long) p.getId());
         Observation.setOrni((long) p.getOrni());
         Observation.setOiseau((long) p.getOiseau());
         Observation.setText(p.getText());
 
+        // delete the bird in the cloud
         new EndpointsAsyncTaskObserv(2,Observation, dbHelper).execute();
 
     }

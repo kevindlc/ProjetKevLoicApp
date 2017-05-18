@@ -73,10 +73,7 @@ public class addObserv extends AppCompatActivity {
 
                 Ttext = (EditText)   findViewById(R.id.editText2);
 
-
                 bDB.createObservation(bDB.getLastID(),oDB.getIdByName(oiseau),ID_USER,Ttext.getText().toString());
-
-
 
                 Intent intent = new Intent(addObserv.this , HomeObservations.class);
                 intent.putExtra("ID_USER" , ID_USER);
