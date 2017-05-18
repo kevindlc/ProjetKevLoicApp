@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskObserv;
 import com.example.kev.projetkevloic.object.Observation;
 import com.example.kev.projetkevloic.object.Oiseau;
+import com.example.kev.projetkevloic.object.Ornithologue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,20 +135,25 @@ public class ObserverDB {
         if(cursor.moveToFirst()) {
             do {
                 Observation o = new Observation();
+                Log.d("-"+cursor.getString(0)+"_", "0 -");
+                Log.d("-"+cursor.getString(1)+"_", "1 -");
+                Log.d("-"+cursor.getString(2)+"_", "2 -");
+                Log.d("-"+cursor.getString(3)+"_", "3 -");
+
+
+
+
+
                 o.setId(Integer.parseInt(cursor.getString(0)));
                 o.setText(cursor.getString(1));
                 o.setOiseau(Integer.parseInt(cursor.getString(2)));
                 o.setOrni(Integer.parseInt(cursor.getString(3)));
-                Log.d("TEXT", cursor.getString(1));
-                Log.d("ID",cursor.getString(0) );
 
-                Log.d("Ois",cursor.getString(2) );
-
-                Log.d("Orni", cursor.getString(3));
+                int idOiseau = (o.getOiseau());
 
 
+                Log.d(idOiseau+"", "OISEAUX N -");
 
-                int idOiseau = Integer.parseInt(cursor.getString(2));
                 String idO = getNameOiseau(idOiseau);
                 o.setOiseauN(idO);
 
@@ -236,34 +242,61 @@ public class ObserverDB {
 
     // retourn le nom d'un oiseau par rapport à son ID
     public String getNameOiseau(long id){
+        String name = "" ;
+
+
         open();
-        Cursor cursor = database.query(DatabaseHelper.TABLE_OISEAU, allColumnsOiseau , DatabaseHelper.OISEAU_ID + "=?",
-                new String[]{String.valueOf(id)},null,null,null,null);
-        if(cursor != null)  {
-            cursor.moveToFirst();
+
+        List<Oiseau> oiss = new ArrayList<Oiseau>();
+
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OISEAU;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                int idOiseau = Integer.parseInt(cursor.getString(0));
+               if(id ==idOiseau){
+                   name = cursor.getString(1);
+               }
+
+            }while (cursor.moveToNext());
         }
 
-        String name = cursor.getString(2);
-
         close();
+
+
         return name;
 
     }
 
     // retourne le nom d'un ornitho par rapport à son ID
     public String getNameOrnitho(long id){
+        String name = "" ;
+
+
         open();
-        Cursor cursor = database.query(DatabaseHelper.TABLE_ORNITHO, allColumnsOrnitho , DatabaseHelper.ORNITHO_ID + "=?",
-                new String[]{String.valueOf(id)},null,null,null,null);
-        if(cursor != null)  {
-            cursor.moveToFirst();
-            Log.d(cursor.toString(),"-");
+
+        List<Ornithologue> oiss = new ArrayList<Ornithologue>();
+
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_ORNITHO;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                int idOrni = Integer.parseInt(cursor.getString(0));
+                if(id ==idOrni){
+                    name = cursor.getString(1);
+                }
+
+            }while (cursor.moveToNext());
         }
 
-
-
         close();
-        return "sa";
+
+
+        return name;
 
     }
 

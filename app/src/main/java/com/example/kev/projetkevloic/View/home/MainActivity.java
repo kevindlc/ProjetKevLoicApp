@@ -11,6 +11,7 @@ import com.example.kev.projetkevloic.Database.ObserverDB;
 import com.example.kev.projetkevloic.Database.OiseauDB;
 import com.example.kev.projetkevloic.Database.OrnithoDB;
 import com.example.kev.projetkevloic.R;
+import com.example.kev.projetkevloic.activity.Login;
 import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskObserv;
 import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOiseau;
 import com.example.kev.projetkevloic.cloud.EndpointsAsyncTaskOrnitho;
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OpenOrnithologue(View view) {
-
         Intent intent = new Intent(MainActivity.this, HomeOrnithologue.class);
         intent.putExtra("ID_USER", ID_USER);
 
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OpenObservations(View view) {
-
         Intent intent = new Intent(MainActivity.this, HomeObservations.class);
         intent.putExtra("ID_USER", ID_USER);
 

@@ -46,13 +46,14 @@ public class ObservAdapter extends ArrayAdapter<Observation> {
 
         }
 
+
         //getItem(position) va récupérer l'item [position] de la List<Oiseau> oiseaux
         Observation observ = getItem(position);
 
 
-        viewHolder.orni.setText(observ.getOrniN() + "-----");
-        viewHolder.oiseau.setText(observ.getOiseauN() + "ffasd");
-        viewHolder.text.setText(observ.getText() + "****");
+        viewHolder.orni.setText(observ.getOrniN());
+        viewHolder.oiseau.setText(observ.getOiseauN());
+        viewHolder.text.setText(observ.getText());
 
         return convertView;
     }
