@@ -75,7 +75,6 @@ public class OrnithoDB {
     public void createOrnitho(String username, String password, String age, String canton,
                               com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue or) {
         open();
-
         ContentValues values = new ContentValues();
 
         values.put(DatabaseHelper.ORNITHO_USERNAME, username);
