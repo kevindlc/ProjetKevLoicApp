@@ -90,6 +90,8 @@ public class OiseauDB {
         long id = o.getId();
         open();
         database.delete(DatabaseHelper.TABLE_OISEAU, DatabaseHelper.OISEAU_ID + " = " + id , null);
+        new EndpointsAsyncTaskOiseau(2,(int)id, dbHelper).execute();
+
 
         close();
     }
@@ -131,6 +133,27 @@ public class OiseauDB {
 
         close();
         return oiseaux;
+    }
+
+    public int getLastID(){
+
+        open();
+
+        int lastid =0;
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OISEAU;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+               lastid = (Integer.parseInt(cursor.getString(0)));
+
+            }while (cursor.moveToNext());
+        }
+
+        lastid = lastid +1;
+        close();
+        return lastid;
     }
 
     // count the number of birds - never use

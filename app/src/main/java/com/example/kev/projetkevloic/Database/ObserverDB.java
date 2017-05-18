@@ -89,6 +89,13 @@ public class ObserverDB {
 
 
         database.insert(DatabaseHelper.TABLE_OBSERVATION, null, values);
+        com.example.kev.myapplication.backend.observationApi.model.Observation obs = new com.example.kev.myapplication.backend.observationApi.model.Observation();
+        obs.setText(text);
+        obs.setId((long)id);
+        obs.setOiseau((long) idOiseau);
+        obs.setOrni((long) idOrnitho);
+
+        new EndpointsAsyncTaskObserv(3,obs,dbHelper).execute();
 
         close();
     }
@@ -97,6 +104,7 @@ public class ObserverDB {
     public void deleteObservation(int o){
         open();
         database.delete(DatabaseHelper.TABLE_OBSERVATION, DatabaseHelper.OBSERVATION_ID + " = " + o , null);
+        new EndpointsAsyncTaskObserv(2,o,dbHelper).execute();
         close();
     }
 
@@ -130,6 +138,14 @@ public class ObserverDB {
                 o.setText(cursor.getString(1));
                 o.setOiseau(Integer.parseInt(cursor.getString(2)));
                 o.setOrni(Integer.parseInt(cursor.getString(3)));
+                Log.d("TEXT", cursor.getString(1));
+                Log.d("ID",cursor.getString(0) );
+
+                Log.d("Ois",cursor.getString(2) );
+
+                Log.d("Orni", cursor.getString(3));
+
+
 
                 int idOiseau = Integer.parseInt(cursor.getString(2));
                 String idO = getNameOiseau(idOiseau);
@@ -147,6 +163,30 @@ public class ObserverDB {
 
         close();
         return observations;
+    }
+
+
+    // retourne une liste de toutes les observations
+    public int getLastID(){
+
+        open();
+
+
+        int i = 0;
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_OBSERVATION;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Observation o = new Observation();
+                i = (Integer.parseInt(cursor.getString(0)));
+                          }while (cursor.moveToNext());
+        }
+
+        close();
+        i ++;
+        return i;
     }
 
     // compte le nombre d'observations - useless
@@ -313,6 +353,18 @@ public class ObserverDB {
         }
 
         close();
+    }
+
+    public void deleteCloudObservation(Observation p){
+
+        com.example.kev.myapplication.backend.observationApi.model.Observation Observation = new com.example.kev.myapplication.backend.observationApi.model.Observation();
+        Observation.setId((long) p.getId());
+        Observation.setOrni((long) p.getOrni());
+        Observation.setOiseau((long) p.getOiseau());
+        Observation.setText(p.getText());
+
+        new EndpointsAsyncTaskObserv(2,Observation, dbHelper).execute();
+
     }
 }
 

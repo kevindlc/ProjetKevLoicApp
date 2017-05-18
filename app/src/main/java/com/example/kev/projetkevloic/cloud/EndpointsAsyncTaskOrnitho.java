@@ -28,6 +28,7 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
     private DatabaseHelper db;
     public Login login = null;
     public static long lastid;
+    private int temp ;
 
 
     public EndpointsAsyncTaskOrnitho() {
@@ -41,6 +42,11 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
     public EndpointsAsyncTaskOrnitho(Ornithologue ornithologue, DatabaseHelper db) {
         this.ornithologue = ornithologue;
         this.db = db;
+    }
+    public EndpointsAsyncTaskOrnitho(int temp, Ornithologue ornithologue, DatabaseHelper db) {
+        this.ornithologue = ornithologue;
+        this.db = db;
+        this.temp = temp;
     }
 
     @Override
@@ -65,7 +71,6 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
 
 
 
-
         try{
             // Call here the wished methods on the Endpoints
             // For instance insert
@@ -87,21 +92,24 @@ public class EndpointsAsyncTaskOrnitho extends AsyncTask<Void, Void, List<Ornith
 
         Log.d("ON VERA", "INTOC ecutendoipintstaskornitho11");
 
-        if(result != null) {
-            for (Ornithologue s:result) {
+        if(temp!=1){
+            if(result != null) {
+                for (Ornithologue s:result) {
 
-                Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
+                    Log.d("ON VERA", "INTOC ecutendoipintstaskornitho222");
 
-                long id = s.getId();
-                lastid = id;
-                String username = s.getUsername();
-                String password = s.getPassword();
-                String age = s.getAge();
-                String canton = s.getCanton();
+                    long id = s.getId();
+                    lastid = id;
+                    String username = s.getUsername();
+                    String password = s.getPassword();
+                    String age = s.getAge();
+                    String canton = s.getCanton();
 
-                Login.rDB.createOrnitho(id, username, password, age , canton);
+                    Login.rDB.createOrnitho(id, username, password, age , canton);
+                }
             }
         }
+
 
 
     }

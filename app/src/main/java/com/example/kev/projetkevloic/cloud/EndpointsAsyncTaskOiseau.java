@@ -30,7 +30,7 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     private Login login = null;
     public static long lastid;
     private int temp;
-    private long idOiseau=0;
+    private long idOiseau;
 
 
 
@@ -57,7 +57,6 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
     }
 
     public EndpointsAsyncTaskOiseau(int temp, int  idOiseau, DatabaseHelper db) {
-        this.oiseau = oiseau;
         this.db = db;
         this.temp = temp;
         this.idOiseau = idOiseau;
@@ -130,6 +129,11 @@ public class EndpointsAsyncTaskOiseau extends AsyncTask<Void, Void, List<Oiseau>
                     String taille = s.getTaille();
                     String text = s.getText();
 
+                    // if is the first bird
+                    if(id == 0){
+                        Login.oDB.createOiseau(nom, color, taille, poids , text);
+
+                    }
                     Login.oDB.createOiseau(id,nom, color, taille, poids , text);
 
                 }

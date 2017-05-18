@@ -62,7 +62,6 @@ public class addOiseau extends AppCompatActivity {
                 EditText tnom , ttext, tpoids,ttaille;
                 finish();
                 Spinner mySpinner=(Spinner) findViewById(R.id.editText7);
-
                 String color = mySpinner.getSelectedItem().toString();
 
                 tnom =  (EditText)  findViewById(R.id.editText2);
@@ -71,6 +70,19 @@ public class addOiseau extends AppCompatActivity {
                 ttaille = (EditText)   findViewById(R.id.editText3);
 
                 oDB.createOiseau(tnom.getText().toString(), color,tpoids.getText().toString(), ttaille.getText().toString(), ttext.getText().toString() );
+
+                Oiseau os = new Oiseau();
+
+                os.setNom(tnom.getText().toString());
+                os.setColor(color);
+                os.setText(tpoids.getText().toString());
+                os.setPoids(tpoids.getText().toString());
+                os.setText(ttaille.getText().toString());
+                os.setId(oDB.getLastID());
+
+
+
+                oDB.sqlToCloudOiseauEdit(os);
 
                 Intent intent = new Intent(addOiseau.this , HomeOiseaux.class);
                 intent.putExtra("ID_USER" , ID_USER);

@@ -72,6 +72,27 @@ public class OrnithoDB {
         close();
     }
 
+    public void createOrnitho(String username, String password, String age, String canton,
+                              com.example.kev.myapplication.backend.ornithologueApi.model.Ornithologue or) {
+        open();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DatabaseHelper.ORNITHO_USERNAME, username);
+        values.put(DatabaseHelper.ORNITHO_PASSWORD, password);
+        values.put(DatabaseHelper.ORNITHO_AGE, age);
+        values.put(DatabaseHelper.ORNITHO_CANTON, canton);
+
+        database.insert(DatabaseHelper.TABLE_ORNITHO, null, values);
+        new EndpointsAsyncTaskOrnitho(or,dbHelper ).execute();
+        Log.d("OK","OKKKK");
+
+
+
+
+        close();
+    }
+
     public void deleteOrnitho(int o) {
         open();
         database.delete(DatabaseHelper.TABLE_ORNITHO, DatabaseHelper.ORNITHO_ID + " = " + o, null);
@@ -105,6 +126,27 @@ public class OrnithoDB {
 
         close();
         return ornithologues;
+    }
+
+    public int getLastId() {
+        open();
+
+
+        int lastid = 0;
+
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_ORNITHO;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                lastid = (Integer.parseInt(cursor.getString(0)));
+
+            } while (cursor.moveToNext());
+        }
+
+        close();
+        return lastid + 1;
     }
 
     // count the number of ornitho - never use
@@ -215,7 +257,7 @@ public class OrnithoDB {
         orni.setUsername(p.getUsername());
         orni.setPassword(p.getPassword());
 
-        new EndpointsAsyncTaskOrnitho(orni, dbHelper).execute();
+        new EndpointsAsyncTaskOrnitho(1,orni, dbHelper).execute();
     }
 
 

@@ -36,41 +36,52 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     private Login login = null;
     public static long lastid;
     private int temp;
-
+    private long id = 0;
 
 
     public EndpointsAsyncTaskObserv() {
 
     }
+
     public EndpointsAsyncTaskObserv(DatabaseHelper db, Login login) {
         this.db = db;
         this.login = login;
         this.temp = 0;
     }
 
-    public EndpointsAsyncTaskObserv(Observation obs , DatabaseHelper db) {
+    public EndpointsAsyncTaskObserv(Observation obs, DatabaseHelper db) {
         this.observation = obs;
         this.db = db;
         this.temp = 0;
     }
-    public EndpointsAsyncTaskObserv(int i,Observation obs , DatabaseHelper db) {
+
+    public EndpointsAsyncTaskObserv(int i, Observation obs, DatabaseHelper db) {
         this.observation = obs;
         this.db = db;
         this.temp = i;
     }
 
+    public EndpointsAsyncTaskObserv(int i) {
+
+        this.temp = i;
+    }
+    public EndpointsAsyncTaskObserv(int i, int id, DatabaseHelper db) {
+        this.db = db;
+        this.temp = i;
+        this.id = id;
+    }
+
 
     @Override
     protected List<Observation> doInBackground(Void... params) {
-        temp = 0;
         if (observationApi == null) {  // Only do this once
             ObservationApi.Builder builder = new ObservationApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-            // options for running against local devappserver
-            // - 10.0.2.2 is localhost's IP address in Android emulator
-            // - turn off compression when running against local devappserver
-            // if you deploy on the cloud backend, use your app name
-            // such as https://<your-app-id>.appspot.com
+                    // options for running against local devappserver
+                    // - 10.0.2.2 is localhost's IP address in Android emulator
+                    // - turn off compression when running against local devappserver
+                    // if you deploy on the cloud backend, use your app name
+                    // such as https://<your-app-id>.appspot.com
                     .setRootUrl("https://findthebird-167412.appspot.com/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
@@ -83,11 +94,25 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
             observationApi = builder.build();
         }
 
-        try{
+        if(temp == 2){
+            try {
+                observationApi.remove(id).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(temp == 3){
+            Log.d("fdafasd","fasdd");
+        }
+
+
+        try {
             // Call here the wished methods on the Endpoints
             // For instance insert
-            if(observation != null){
-                if(observation.getId()>lastid){
+            if (observation != null) {
+                if (observation.getId() > lastid) {
                     observationApi.insert(observation).execute();
                     Log.i(TAG, "insert observation");
                 }
@@ -96,7 +121,7 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
             // and for instance return the list of all employees
             return observationApi.list().execute().getItems();
 
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, e.toString());
             return new ArrayList<Observation>();
 
@@ -107,6 +132,10 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
     @Override
     protected void onPostExecute(List<Observation> observations) {
         Log.d("ON VERA", "INTOC ecutendoipintstask OBSERVER");
+
+
+
+
 
         if (temp == 0) {
             if (observations != null) {
@@ -138,12 +167,16 @@ public class EndpointsAsyncTaskObserv extends AsyncTask<Void, Void, List<Observa
                     }
                 }
 
+
             }
 
-        }
-    }
-    }
+            }
 
+
+        }
+
+
+    }
 
 
 

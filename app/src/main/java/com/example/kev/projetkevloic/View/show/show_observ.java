@@ -123,6 +123,7 @@ public class show_observ extends AppCompatActivity  {
             case R.id.butDelete:
                 intent = new Intent(this, HomeObservations.class);
                 bDB.deleteObservation(id);
+
                 intent.putExtra("ID_USER" , ID_USER);
                 this.startActivity(intent);
                 break;
