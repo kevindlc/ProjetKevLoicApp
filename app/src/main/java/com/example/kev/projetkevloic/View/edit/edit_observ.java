@@ -14,6 +14,7 @@ import com.example.kev.projetkevloic.R;
 import com.example.kev.projetkevloic.View.home.HomeObservations;
 import com.example.kev.projetkevloic.View.home.HomeOiseaux;
 import com.example.kev.projetkevloic.View.home.HomeOrnithologue;
+import com.example.kev.projetkevloic.View.show.show_observ;
 import com.example.kev.projetkevloic.object.Observation;
 
 /**

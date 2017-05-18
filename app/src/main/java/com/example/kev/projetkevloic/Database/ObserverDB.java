@@ -22,6 +22,9 @@ import java.util.Observer;
 
 public class ObserverDB {
 
+
+    // SALUT LOIC
+
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     public int test = 0;

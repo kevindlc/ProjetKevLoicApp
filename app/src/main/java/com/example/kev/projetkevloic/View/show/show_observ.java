@@ -96,6 +96,8 @@ public class show_observ extends AppCompatActivity  {
 
         // create a intent to move to edit and add values
         Intent intent = new Intent(show_observ.this, edit_observ.class);
+        finish();
+    finish();
 
         intent.putExtra("orni", orni);
         intent.putExtra("oiseau",oiseau);
