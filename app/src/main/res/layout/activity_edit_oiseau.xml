@@ -109,14 +109,15 @@
                 android:layout_marginTop="30dp"
                 android:ems="10"
                 />
-
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/editText2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:ems="10"
-               />
+                />
+
+
 
             <EditText
                 android:id="@+id/editText5"
@@ -137,14 +138,14 @@
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_editor_absoluteY="353dp"/>
 
+
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/editText4"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:ems="10"
-               />
-
+                />
 
             <Button
                 android:id="@+id/butOk"
